@@ -1,0 +1,307 @@
+/* Events Page Styles */
+.events-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #8f3f84 0%, #1a1023 100%);
+  padding: 2rem 0;
+  color: white;
+}
+
+.events-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.events-section {
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #fff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Upcoming Events Card */
+.upcoming-event-card {
+  background: rgba(71, 39, 78, 0.704);
+  backdrop-filter: blur(10px);
+  padding: 3rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.upcoming-event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.event-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.event-status {
+  font-size: 1.5rem;
+  color: #ff6b9d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Past Events Card - Based on Figma Design */
+.past-event-card {
+  background: linear-gradient(135deg, #2a1b3d 0%, #1a1023 100%);
+  border: 1px solid #5C5656;
+  border-radius: 15px;
+  padding: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Event Navigation Bar */
+.event-nav {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: #ff6b9d;
+}
+
+.profile-icon {
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Event Main Content */
+.event-main-content {
+  padding: 2rem;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.sponsor-logo {
+  height: 120px;
+  width: auto;
+  object-fit: contain;
+  max-width: 400px;
+  position: absolute;
+  top: -30px;
+  right: 0;
+}
+
+.event-name {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+
+
+.event-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: white;
+  margin-bottom: 2rem;
+  text-align: justify;
+}
+
+.highlight {
+  color: #ff6b9d;
+  font-weight: 600;
+}
+
+.event-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.location, .datetime, .sponsor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  font-size: 0.9rem;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: white;
+  font-weight: 600;
+}
+
+/* Event Passed Message */
+.event-passed-message {
+  background: rgba(255, 107, 157, 0.1);
+  border: 2px solid #ff6b9d;
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.passed-icon {
+  display: none;
+}
+
+.passed-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff6b9d;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.passed-text {
+  font-size: 1.1rem;
+  color: white;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .events-container {
+    padding: 0 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .upcoming-event-card {
+    padding: 2rem;
+  }
+
+  .event-title {
+    font-size: 2rem;
+  }
+
+  .event-status {
+    font-size: 1.2rem;
+  }
+
+  .event-nav {
+    padding: 1rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+  }
+
+  .event-main-content {
+    padding: 1.5rem;
+  }
+
+  .event-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .event-name {
+    font-size: 2rem;
+  }
+
+  .sponsor-logo {
+    height: 120px;
+    max-width: 320px;
+  }
+
+  .event-details {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .event-description {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-left {
+    gap: 1rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .event-name {
+    font-size: 1.5rem;
+  }
+
+  .sponsor-logo {
+    height: 100px;
+    max-width: 250px;
+  }
+
+  .passed-title {
+    font-size: 1.5rem;
+  }
+}
