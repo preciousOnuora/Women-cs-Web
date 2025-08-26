@@ -23,24 +23,42 @@ const Feedback = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Feedback submitted:', formData);
-    alert('Thank you for your feedback! We appreciate your input.');
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      university: '',
-      studentStatus: '',
-      eventParticipation: '',
-      overallExperience: '',
-      technicalSkills: '',
-      networkingValue: '',
-      suggestions: '',
-      rating: 5
-    });
+    
+    try {
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Thank you for your feedback! We appreciate your input.');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          university: '',
+          studentStatus: '',
+          eventParticipation: '',
+          overallExperience: '',
+          technicalSkills: '',
+          networkingValue: '',
+          suggestions: '',
+          rating: 5
+        });
+      } else {
+        alert('Error submitting feedback. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      alert('Error submitting feedback. Please try again.');
+    }
   };
 
   return (
