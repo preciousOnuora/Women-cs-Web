@@ -19,11 +19,7 @@ const Header = () => {
     setShowForgotPassword(false);
   };
 
-  const handleSignUp = () => {
-    setShowRegister(true);
-    setShowLogin(false);
-    setShowForgotPassword(false);
-  };
+
 
   const handleForgotPassword = () => {
     setShowForgotPassword(true);
@@ -74,9 +70,6 @@ const Header = () => {
             <div className="auth-buttons">
               <button className="sign-in-btn" onClick={handleSignIn}>
                 Sign In
-              </button>
-              <button className="sign-up-btn" onClick={handleSignUp}>
-                Sign Up
               </button>
             </div>
           )}
