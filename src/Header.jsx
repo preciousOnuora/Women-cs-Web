@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
 import logo from './Images/logo.png';
+import Login from './Login';
+import Register from './Register';
 import './App.css';
 
 const Header = () => {
-    return (
+  const { user, logout, isAuthenticated } = useAuth();
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+
+  const handleSignIn = () => {
+    setShowLogin(true);
+    setShowRegister(false);
+  };
+
+  const handleSignUp = () => {
+    setShowRegister(true);
+    setShowLogin(false);
+  };
+
+  const handleClose = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
+  return (
+    <>
       <header className="header">
         <div className="nav-container">
           <div className="logo">
@@ -19,10 +46,50 @@ const Header = () => {
             <Link to="/contact" className="nav-link">Contact</Link>
             <Link to="/sponsors" className="nav-link">Sponsors</Link>
           </nav>
-          <button className="sign-in-btn">Sign In</button>
+          
+          {isAuthenticated ? (
+            <div className="user-menu">
+              <span className="welcome-text">
+                Welcome, {user?.firstName}!
+              </span>
+              <button className="sign-out-btn" onClick={handleLogout}>
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="auth-buttons">
+              <button className="sign-in-btn" onClick={handleSignIn}>
+                Sign In
+              </button>
+              <button className="sign-up-btn" onClick={handleSignUp}>
+                Sign Up
+              </button>
+            </div>
+          )}
         </div>
       </header>
-    );
-  };
+
+      {showLogin && (
+        <Login 
+          onClose={handleClose} 
+          onSwitchToRegister={() => {
+            setShowLogin(false);
+            setShowRegister(true);
+          }}
+        />
+      )}
+
+      {showRegister && (
+        <Register 
+          onClose={handleClose} 
+          onSwitchToLogin={() => {
+            setShowRegister(false);
+            setShowLogin(true);
+          }}
+        />
+      )}
+    </>
+  );
+};
   
   export default Header;

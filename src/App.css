@@ -104,7 +104,16 @@ body {
   color: #007bff;
 }
 
-.sign-in-btn {
+/* Authentication Button Styles */
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: 20px;
+  flex-shrink: 0;
+}
+
+.sign-in-btn, .sign-up-btn {
   background: #007bff;
   color: #fff;
   border: none;
@@ -112,14 +121,53 @@ body {
   padding: 8px 20px;
   font-size: 1rem;
   cursor: pointer;
-  margin-left: 20px;
   transition: background 0.2s;
   white-space: nowrap;
-  flex-shrink: 0;
+  font-weight: 500;
 }
 
 .sign-in-btn:hover {
   background: #0056b3;
+}
+
+.sign-up-btn {
+  background: #28a745;
+}
+
+.sign-up-btn:hover {
+  background: #1e7e34;
+}
+
+/* User Menu Styles */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 20px;
+  flex-shrink: 0;
+}
+
+.welcome-text {
+  color: #333;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.sign-out-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.sign-out-btn:hover {
+  background: #c82333;
 }
 
 /* Main Content */
