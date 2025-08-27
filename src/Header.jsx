@@ -4,26 +4,37 @@ import { useAuth } from './contexts/AuthContext';
 import logo from './Images/logo.png';
 import Login from './Login';
 import Register from './Register';
+import ForgotPassword from './ForgotPassword';
 import './App.css';
 
 const Header = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const handleSignIn = () => {
     setShowLogin(true);
     setShowRegister(false);
+    setShowForgotPassword(false);
   };
 
   const handleSignUp = () => {
     setShowRegister(true);
     setShowLogin(false);
+    setShowForgotPassword(false);
+  };
+
+  const handleForgotPassword = () => {
+    setShowForgotPassword(true);
+    setShowLogin(false);
+    setShowRegister(false);
   };
 
   const handleClose = () => {
     setShowLogin(false);
     setShowRegister(false);
+    setShowForgotPassword(false);
   };
 
   const handleLogout = async () => {
@@ -79,6 +90,7 @@ const Header = () => {
             setShowLogin(false);
             setShowRegister(true);
           }}
+          onSwitchToForgotPassword={handleForgotPassword}
         />
       )}
 
@@ -87,6 +99,16 @@ const Header = () => {
           onClose={handleClose} 
           onSwitchToLogin={() => {
             setShowRegister(false);
+            setShowLogin(true);
+          }}
+        />
+      )}
+
+      {showForgotPassword && (
+        <ForgotPassword 
+          onClose={handleClose} 
+          onSwitchToLogin={() => {
+            setShowForgotPassword(false);
             setShowLogin(true);
           }}
         />

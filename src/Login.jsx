@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from './contexts/AuthContext';
 import './Login.css';
 
-const Login = ({ onClose, onSwitchToRegister }) => {
+const Login = ({ onClose, onSwitchToRegister, onSwitchToForgotPassword }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -75,6 +75,13 @@ const Login = ({ onClose, onSwitchToRegister }) => {
               required
               placeholder="Enter your password"
             />
+            <button 
+              type="button"
+              className="forgot-password-link"
+              onClick={onSwitchToForgotPassword}
+            >
+              Forgot your password?
+            </button>
           </div>
           
           <button 

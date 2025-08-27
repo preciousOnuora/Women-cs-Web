@@ -7,6 +7,7 @@ import Sponsors from './Sponsors.jsx';
 import Feedback from './Feedback.jsx';
 import Gallery from './Gallery.jsx';
 import Dashboard from './Dashboard.jsx';
+import ResetPassword from './ResetPassword.jsx';
 import Footer from './Footer.jsx';
 import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
@@ -31,6 +32,7 @@ const App = () => {
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
             </Routes>
           </main>
           <Footer />

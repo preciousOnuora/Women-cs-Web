@@ -104,6 +104,42 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email) => {
+    try {
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+      return { success: result.success, message: result.message };
+    } catch (error) {
+      console.error('Forgot password error:', error);
+      return { success: false, message: 'Error processing password reset request. Please try again.' };
+    }
+  };
+
+  const resetPassword = async (token, password) => {
+    try {
+      const response = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token, password }),
+      });
+
+      const result = await response.json();
+      return { success: result.success, message: result.message };
+    } catch (error) {
+      console.error('Reset password error:', error);
+      return { success: false, message: 'Error resetting password. Please try again.' };
+    }
+  };
+
   const value = {
     user,
     token,
@@ -111,6 +147,8 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    forgotPassword,
+    resetPassword,
     isAuthenticated: !!user && !!token,
   };
 
