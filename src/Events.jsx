@@ -1,21 +1,149 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from './contexts/AuthContext';
 import './Events.css';
 import diageoLogo from './Images/diageoLogo.png';
 import athenaLogo from './Images/athena.png';
 
 const Events = () => {
+  const { isAuthenticated } = useAuth();
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [registering, setRegistering] = useState({});
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch('/api/events');
+      const result = await response.json();
+
+      if (result.success) {
+        setEvents(result.data);
+      } else {
+        setError(result.message);
+      }
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      setError('Error loading events');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegister = async (eventId) => {
+    if (!isAuthenticated) {
+      alert('Please sign in to register for events');
+      return;
+    }
+
+    setRegistering(prev => ({ ...prev, [eventId]: true }));
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/events/register', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ eventId }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Successfully registered for the event!');
+        // Refresh events to update participant count
+        fetchEvents();
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error('Error registering for event:', error);
+      alert('Error registering for event. Please try again.');
+    } finally {
+      setRegistering(prev => ({ ...prev, [eventId]: false }));
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const isEventUpcoming = (dateString) => {
+    const eventDate = new Date(dateString);
+    const now = new Date();
+    return eventDate > now;
+  };
+
+  const upcomingEvents = events.filter(event => isEventUpcoming(event.date));
+  const pastEvents = events.filter(event => !isEventUpcoming(event.date));
+
   return (
     <div className="events-page">
       <div className="events-container">
         {/* Upcoming Events Section */}
         <section className="events-section">
           <h2 className="section-title">Upcoming Events</h2>
-          <div className="upcoming-event-card">
-            <div className="event-content">
-              <h3 className="event-title">Hackathon 2026</h3>
-              <p className="event-status">Coming Soon</p>
+          
+          {loading ? (
+            <div className="loading">Loading events...</div>
+          ) : error ? (
+            <div className="error-message">{error}</div>
+          ) : upcomingEvents.length === 0 ? (
+            <div className="no-events">
+              <p>No upcoming events scheduled. Check back soon!</p>
             </div>
-          </div>
+          ) : (
+            <div className="events-grid">
+              {upcomingEvents.map((event) => (
+                <div key={event._id} className="event-card">
+                  <div className="event-header">
+                    <h3 className="event-title">{event.title}</h3>
+                    <div className="event-participants">
+                      {event.currentParticipants}/{event.maxParticipants} registered
+                    </div>
+                  </div>
+                  
+                  <p className="event-description">{event.description}</p>
+                  
+                  <div className="event-details">
+                    <div className="event-detail">
+                      <span className="detail-label">📅 Date:</span>
+                      <span className="detail-value">{formatDate(event.date)}</span>
+                    </div>
+                    <div className="event-detail">
+                      <span className="detail-label">🕒 Time:</span>
+                      <span className="detail-value">{event.time}</span>
+                    </div>
+                    <div className="event-detail">
+                      <span className="detail-label">📍 Location:</span>
+                      <span className="detail-value">{event.location}</span>
+                    </div>
+                  </div>
+                  
+                  <button 
+                    className={`register-btn ${event.currentParticipants >= event.maxParticipants ? 'full' : ''}`}
+                    onClick={() => handleRegister(event._id)}
+                    disabled={registering[event._id] || event.currentParticipants >= event.maxParticipants}
+                  >
+                    {registering[event._id] ? 'Registering...' : 
+                     event.currentParticipants >= event.maxParticipants ? 'Event Full' : 
+                     'Register for Event'}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Past Events Section */}

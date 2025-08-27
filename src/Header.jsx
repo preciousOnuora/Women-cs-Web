@@ -45,6 +45,9 @@ const Header = () => {
             <Link to="/gallery" className="nav-link">Gallery</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
             <Link to="/sponsors" className="nav-link">Sponsors</Link>
+            {isAuthenticated && (
+              <Link to="/dashboard" className="nav-link">Dashboard</Link>
+            )}
           </nav>
           
           {isAuthenticated ? (
