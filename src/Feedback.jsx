@@ -27,7 +27,7 @@ const Feedback = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('https://womenincs-precious-onuoras-projects.vercel.app/api/feedback', {
+      const response = await fetch('/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
