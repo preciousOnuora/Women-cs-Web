@@ -10,7 +10,6 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  /* backdrop-filter: blur(5px); */
 }
 
 .auth-container {
@@ -105,13 +104,14 @@
   border-color: #2980b9;
   background-color: #ffffff;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-  transform: scale(1.02);
 }
 
 .form-group input::placeholder {
   color: #ccc;
   font-style: italic;
 }
+
+
 
 .error-message {
   background-color: #fee;
