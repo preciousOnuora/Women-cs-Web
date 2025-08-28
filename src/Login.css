@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(135deg, #8f3f84 0%, #1a1023 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,14 +13,16 @@
 }
 
 .auth-container {
-  background: #ffffff;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   padding: 2rem;
   width: 90%;
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   position: relative;
 }
 
@@ -34,10 +36,16 @@
 }
 
 .auth-header h2 {
-  color: #2c3e50;
+  color: white;
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff, #ff6b9d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
 }
 
 .close-btn {
@@ -80,35 +88,36 @@
 }
 
 .form-group label {
-  font-weight: 700;
-  color: #2c3e50;
+  font-weight: 600;
+  color: #f1f5f9;
   font-size: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
 }
 
 .form-group input,
 .form-group select {
-  padding: 0.75rem;
-  border: 2px solid #3498db;
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  background-color: #ffffff;
-  color: #2c3e50;
-  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #2980b9;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  border-color: #ff6b9d;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
 }
 
 .form-group input::placeholder {
-  color: #ccc;
-  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 
@@ -136,44 +145,46 @@
 .forgot-password-link {
   background: none;
   border: none;
-  color: #3498db;
+  color: #ff6b9d;
   cursor: pointer;
   font-size: 0.85rem;
   text-align: left;
   padding: 0.25rem 0;
   margin-top: 0.25rem;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
 .forgot-password-link:hover {
-  color: #2980b9;
+  color: #c44569;
   text-decoration: underline;
 }
 
 .forgot-password-text {
-  color: #666;
+  color: #dedede;
   font-size: 0.9rem;
   margin: 0.5rem 0;
   line-height: 1.4;
 }
 
 .auth-btn {
-  background: linear-gradient(135deg, #3498db, #2980b9);
+  background: linear-gradient(135deg, #ff6b9d, #c44569);
   color: white;
   border: none;
-  padding: 0.875rem 1.5rem;
-  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
 }
 
 .auth-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #2980b9, #1f5f8b);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
 }
 
 .auth-btn:disabled {
@@ -191,24 +202,25 @@
 }
 
 .auth-footer p {
-  color: #666;
+  color: #f1f5f9;
   margin: 0;
   font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .switch-btn {
   background: none;
   border: none;
-  color: #3498db;
+  color: #ff6b9d;
   cursor: pointer;
   font-weight: 600;
   text-decoration: underline;
   margin-left: 0.25rem;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
 .switch-btn:hover {
-  color: #2980b9;
+  color: #c44569;
 }
 
 /* Responsive Design */
