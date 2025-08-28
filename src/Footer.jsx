@@ -41,7 +41,7 @@ const Footer = () => {
           <div className="contact-info">
             <p><i className="fas fa-envelope"></i>womenincs.hw@gmail.com</p>
             <p><i className="fas fa-phone"></i> (555) 123-4567</p>
-            <p><i className="fas fa-map-marker-alt"></i> 123 Tech Street, CS City, ST 12345</p>
+            <p><i className="fas fa-map-marker-alt"></i> Heriot-Watt University, Edinburgh Campus</p>
           </div>
         </div>
       </div>
