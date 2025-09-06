@@ -19,8 +19,6 @@ const Header = () => {
     setShowForgotPassword(false);
   };
 
-
-
   const handleForgotPassword = () => {
     setShowForgotPassword(true);
     setShowLogin(false);
@@ -47,7 +45,6 @@ const Header = () => {
             </Link>
           </div>
           <nav className="nav-menu">
-            <Link to="/" className="nav-link">Home</Link>
             <Link to="/events" className="nav-link">Events</Link>
             <Link to="/gallery" className="nav-link">Gallery</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
@@ -109,5 +106,5 @@ const Header = () => {
     </>
   );
 };
-  
-  export default Header;
+
+export default Header;

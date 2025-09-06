@@ -58,13 +58,24 @@ const Event = mongoose.model('Event', eventSchema);
 // Sample events data
 const sampleEvents = [
   {
+    title: "24HR HACKATHON 2026",
+    description: "Work in Teams of 5 to collaborate, code, and innovate! This event features inspiring talks on career journeys, networking opportunities with industry professionals, and the chance to win prizes. Fuel your creativity with free pizza and showcase your skills in this unmissable coding adventure!",
+    date: new Date('2026-02-08'),
+    time: "10:30 AM - 10:30 AM (24 hours)",
+    location: "Heriot-Watt Campus, Robotarium",
+    maxParticipants: 100,
+    currentParticipants: 0,
+    isActive: true
+  },
+  {
     title: "Women in Tech Networking Event",
     description: "Join us for an evening of networking with successful women in technology. Connect with mentors, peers, and industry leaders.",
     date: new Date('2024-09-15'),
     time: "6:00 PM - 8:00 PM",
     location: "Heriot-Watt University, Edinburgh Campus",
     maxParticipants: 100,
-    currentParticipants: 23
+    currentParticipants: 23,
+    isActive: false
   },
   {
     title: "Coding Workshop: Introduction to React",
@@ -73,7 +84,8 @@ const sampleEvents = [
     time: "10:00 AM - 4:00 PM",
     location: "Computer Lab 1, Heriot-Watt University",
     maxParticipants: 30,
-    currentParticipants: 15
+    currentParticipants: 15,
+    isActive: false
   },
   {
     title: "Career Panel: Breaking into Tech",
@@ -82,7 +94,8 @@ const sampleEvents = [
     time: "2:00 PM - 4:00 PM",
     location: "Lecture Hall A, Heriot-Watt University",
     maxParticipants: 80,
-    currentParticipants: 45
+    currentParticipants: 45,
+    isActive: false
   },
   {
     title: "Hackathon: Sustainable Tech Solutions",
@@ -91,7 +104,8 @@ const sampleEvents = [
     time: "Friday 6:00 PM - Sunday 6:00 PM",
     location: "Innovation Hub, Heriot-Watt University",
     maxParticipants: 60,
-    currentParticipants: 12
+    currentParticipants: 12,
+    isActive: false
   },
   {
     title: "Mentorship Program Launch",
@@ -100,7 +114,8 @@ const sampleEvents = [
     time: "3:00 PM - 5:00 PM",
     location: "Student Union Building, Heriot-Watt University",
     maxParticipants: 50,
-    currentParticipants: 8
+    currentParticipants: 8,
+    isActive: false
   }
 ];
 

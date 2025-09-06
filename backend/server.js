@@ -111,6 +111,51 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model('Contact', contactSchema);
 
+// Event Schema
+const eventSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  description: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  time: {
+    type: String,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  maxParticipants: {
+    type: Number,
+    default: 50
+  },
+  currentParticipants: {
+    type: Number,
+    default: 0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Event = mongoose.model('Event', eventSchema);
+
 // API Routes
 
 // Feedback form submission
@@ -191,6 +236,63 @@ app.get('/api/contact', async (req, res) => {
   }
 });
 
+// Events API Routes
+// Get all events
+app.get('/api/events', async (req, res) => {
+  try {
+    const events = await Event.find({ isActive: true }).sort({ date: 1 });
+    res.json({
+      success: true,
+      data: events
+    });
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching events.',
+      error: error.message
+    });
+  }
+});
+
+// Create a new event
+app.post('/api/events', async (req, res) => {
+  try {
+    const { title, description, date, time, location, maxParticipants } = req.body;
+
+    if (!title || !description || !date || !time || !location) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide all required fields'
+      });
+    }
+
+    const event = new Event({
+      title,
+      description,
+      date: new Date(date),
+      time,
+      location,
+      maxParticipants: maxParticipants || 50
+    });
+
+    await event.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Event created successfully!',
+      data: event
+    });
+  } catch (error) {
+    console.error('Error creating event:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating event. Please try again.',
+      error: error.message
+    });
+  }
+});
+
 // Serve React app for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -206,7 +308,7 @@ app.use((error, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

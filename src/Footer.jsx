@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import instagramIcon from './Images/instagram.png';
 
 const Footer = () => {
   return (
@@ -9,14 +10,14 @@ const Footer = () => {
           <h3>Women in Computer Science</h3>
           <p>Empowering women to pursue careers in technology and computer science through mentorship, networking, and educational opportunities.</p>
           <div className="social-links">
+            <a href="https://www.instagram.com/womenincs.hw/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <img src={instagramIcon} alt="Instagram" className="social-icon" />
+            </a>
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <i className="fab fa-linkedin"></i>
             </a>
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
               <i className="fab fa-twitter"></i>
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <i className="fab fa-instagram"></i>
             </a>
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <i className="fab fa-github"></i>
@@ -40,7 +41,6 @@ const Footer = () => {
           <h4>Contact Us</h4>
           <div className="contact-info">
             <p><i className="fas fa-envelope"></i>womenincs.hw@gmail.com</p>
-            <p><i className="fas fa-phone"></i> (555) 123-4567</p>
             <p><i className="fas fa-map-marker-alt"></i> Heriot-Watt University, Edinburgh Campus</p>
           </div>
         </div>

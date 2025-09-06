@@ -230,9 +230,40 @@ main {
 }
 
 .countdown {
-  font-size: 1.2rem;
-  font-weight: 600;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 80px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.countdown-number {
+  font-size: 2rem;
+  font-weight: 700;
   color: #fff;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.countdown-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .feedback-card {
@@ -323,6 +354,13 @@ main {
   border-radius: 5px;
 }
 
+.qr-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
 .description {
   max-width: 600px;
   text-align: left;
@@ -357,6 +395,12 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+}
+
+.sponsors-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .contact-content {
@@ -496,7 +540,7 @@ main {
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin: 2rem 0;
-  padding: 0 2rem;
+  padding: 0;
   width: 100%;
   max-width: 1200px;
   margin-left: auto;
@@ -552,27 +596,82 @@ main {
 }
 
 /* Specific logo adjustments */
+.sponsor-card:nth-child(1) .sponsor-logo img {
+  height: 200px !important;
+  width: 90% !important;
+  max-width: 90% !important;
+}
+
 .sponsor-card:nth-child(2) .sponsor-logo img {
-  transform: translateX(-20px) translateY(-10px);
+  height: 200px !important;
+  width: 90% !important;
+  max-width: 90% !important;
+  transform: translateX(-10px) translateY(-5px);
 }
 
 .sponsor-card:nth-child(3) .sponsor-logo img {
-  height: 180px !important;
-  width: 80% !important;
-  max-width: 80% !important;
-}
-
-/* Alternative selector for Heriot-Watt logo */
-.sponsors-grid .sponsor-card:nth-child(3) .sponsor-logo img {
-  height: 150px !important;
-  width: 70% !important;
-  max-width: 70% !important;
-  transform: translateY(50px);
+  height: 200px !important;
+  width: 90% !important;
+  max-width: 90% !important;
+  transform: translateY(20px);
 }
 
 .sponsors-grid .sponsor-logo.empty {
   border-radius: 8px;
   min-height: 60px;
+}
+
+/* Force Heriot-Watt logo to be larger */
+.sponsors-grid .sponsor-card:nth-child(3) .sponsor-logo img {
+  height: 120px !important;
+  width: 70% !important;
+  max-width: 70% !important;
+  transform: translateY(60px) !important;
+}
+
+/* Ensure desktop layout is maintained */
+@media (min-width: 769px) {
+  .sponsors-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem !important;
+    padding: 0 !important;
+  }
+  
+  .sponsor-card {
+    min-height: 200px !important;
+    padding: 1.5rem !important;
+  }
+  
+  .sponsors-grid .sponsor-logo {
+    min-height: 300px !important;
+    align-items: flex-start !important;
+  }
+  
+  .sponsors-grid .sponsor-logo img {
+    height: 200px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .sponsor-card:nth-child(1) .sponsor-logo img {
+    height: 200px !important;
+    width: 90% !important;
+    max-width: 90% !important;
+  }
+  
+  .sponsor-card:nth-child(2) .sponsor-logo img {
+    height: 200px !important;
+    width: 90% !important;
+    max-width: 90% !important;
+    transform: translateX(-10px) translateY(-5px);
+  }
+  
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 120px !important;
+    width: 70% !important;
+    max-width: 70% !important;
+    transform: translateY(60px);
+  }
 }
 
 .sponsor-divider {
@@ -593,52 +692,136 @@ main {
 /* Responsive Design */
 @media (max-width: 768px) {
   .header {
-    width: 80%;
-    height: auto;
-    min-height: 80px;
-    padding: 15px 0;
+    width: 85%;
+    height: 50px;
+    min-height: 50px;
+    padding: 8px 0;
+    margin: 15px auto 15px auto;
   }
   
   .nav-container {
-    flex-direction: column;
-    gap: 15px;
-    padding: 0 15px;
-    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    padding: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
   }
 
   .nav-menu {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
-    gap: 15px;
-    flex: none;
+    gap: 8px;
+    flex: 1;
+    order: 2;
+  }
+  
+  .logo {
+    order: 1;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  
+  .auth-buttons, .user-menu {
+    order: 3;
+    margin-left: 0;
+    margin-top: 0;
   }
   
   .sign-in-btn {
     margin: 0;
     align-self: center;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .logo-image {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .nav-link {
+    font-size: 0.8rem;
+    padding: 4px 6px;
+  }
+  
+  .welcome-text {
+    font-size: 0.7rem;
+  }
+  
+  .sign-out-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
   }
 
   .main-title {
     font-size: 2.5rem;
+    margin: 1rem 0;
   }
 
   .content-cards {
     flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .event-card, .feedback-card {
+    min-width: 280px;
+    width: 100%;
+    max-width: 350px;
   }
 
   .bottom-section {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .chat-card {
+    min-width: 250px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .qr-placeholder {
+    width: 120px;
+    height: 120px;
+  }
+
+  .qr-image {
+    width: 100px;
+    height: 100px;
   }
 
   .description {
     text-align: center;
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .countdown {
+    gap: 0.5rem;
+  }
+  
+  .countdown-item {
+    min-width: 60px;
+    padding: 0.75rem;
+  }
+  
+  .countdown-number {
+    font-size: 1.5rem;
+  }
+  
+  .countdown-label {
+    font-size: 0.7rem;
   }
 
   .main-content {
     padding: 1rem;
+    overflow-x: hidden;
   }
   
   .contact-content {
@@ -661,59 +844,100 @@ main {
   }
   
   .sponsor-card {
-    min-height: 180px;
-    padding: 1rem;
-    justify-content: space-between;
+    min-height: 200px;
+    padding: 1.2rem;
   }
   
   .sponsors-grid .sponsor-logo {
-    min-height: 200px;
-    align-items: flex-start;
+    min-height: 150px;
+    align-items: center;
     padding-top: 0px;
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 110px;
+    height: 120px !important;
+    width: 90% !important;
+    max-width: 90% !important;
+  }
+  
+  .sponsor-card:nth-child(2) .sponsor-logo img {
+    transform: translateX(-10px) translateY(-5px);
+  }
+  
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 120px !important;
+    width: 80% !important;
+    max-width: 80% !important;
+    transform: translateY(15px);
   }
 }
 
 @media (max-width: 480px) {
   .header {
-    width: 95%;
-    height: auto;
-    min-height: 100px;
-    padding: 15px 0;
+    width: 90%;
+    height: 45px;
+    min-height: 45px;
+    padding: 6px 0;
     border-radius: 50px;
+    margin: 10px auto 10px auto;
   }
   
   .nav-container {
-    padding: 0 20px;
-    gap: 12px;
-    justify-content: center;
+    padding: 0 15px;
+    gap: 4px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
   }
   
   .logo-image {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
   }
   
   .nav-menu {
-    gap: 12px;
-    flex: none;
+    gap: 4px;
+    flex: 1;
+    order: 2;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
   
   .nav-link {
-    font-size: 0.9rem;
-    padding: 5px 8px;
+    font-size: 0.7rem;
+    padding: 2px 4px;
+    white-space: nowrap;
+  }
+  
+  .logo {
+    order: 1;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  
+  .auth-buttons, .user-menu {
+    order: 3;
+    margin-left: 0;
+    margin-top: 0;
   }
   
   .sign-in-btn {
-    padding: 8px 20px;
-    font-size: 0.9rem;
+    padding: 4px 8px;
+    font-size: 0.7rem;
     margin: 0;
     align-self: center;
   }
   
+  .welcome-text {
+    font-size: 0.6rem;
+  }
+  
+  .sign-out-btn {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+  
   .contact-page, .sponsors-page {
     padding: 1rem;
   }
@@ -729,92 +953,221 @@ main {
   .sponsors-content {
     margin-top: 1rem;
   }
-}
-
-@media (max-width: 480px) {
-  .contact-page, .sponsors-page {
-    padding: 1rem;
-  }
-  
-  .page-title {
-    font-size: 2rem;
-  }
-  
-  .contact-content {
-    gap: 1.5rem;
-  }
-  
-  .sponsors-content {
-    margin-top: 1rem;
-  }
-
   
   .sponsors-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .sponsor-card {
+    min-height: 180px;
+    padding: 1.5rem;
+  }
+  
+  .sponsors-grid .sponsor-logo {
+    min-height: 200px;
+    align-items: flex-end;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    justify-content: center;
+  }
+  
+  .sponsors-grid .sponsor-logo img {
+    height: 100px !important;
+    width: 85% !important;
+    max-width: 85% !important;
+  }
+  
+  .sponsor-card:nth-child(1) .sponsor-logo img {
+    height: 100px !important;
+    width: 85% !important;
+    max-width: 85% !important;
+  }
+  
+  .sponsor-card:nth-child(2) .sponsor-logo img {
+    height: 100px !important;
+    width: 85% !important;
+    max-width: 85% !important;
+    transform: translateX(-5px);
+  }
+  
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 100px !important;
+    width: 75% !important;
+    max-width: 75% !important;
+    transform: translateY(10px);
+  }
+  
+  .sponsor-description {
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .header {
+    width: 92%;
+    margin: 8px auto 8px auto;
+    min-height: 40px;
+    height: 40px;
+    border-radius: 40px;
+    padding: 4px 0;
+  }
+  
+  .nav-container {
+    padding: 0 12px;
+    gap: 2px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    height: 100%;
+  }
+  
+  .logo-image {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .nav-menu {
+    gap: 2px;
+    order: 2;
+    flex-wrap: nowrap;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  .logo {
+    order: 1;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  
+  .auth-buttons, .user-menu {
+    order: 3;
+    margin-left: 0;
+    margin-top: 0;
+  }
+  
+  .nav-link {
+    font-size: 0.6rem;
+    padding: 2px 3px;
+  }
+  
+  .sign-in-btn, .sign-out-btn {
+    padding: 3px 6px;
+    font-size: 0.6rem;
+  }
+  
+  .welcome-text {
+    font-size: 0.5rem;
+  }
+  
+  .main-title {
+    font-size: 1.8rem;
+    margin: 0.5rem 0;
+  }
+  
+  .sponsors-grid {
+    grid-template-columns: 1fr;
     padding: 0 0.5rem;
+    gap: 1rem;
   }
   
   .sponsor-card {
     min-height: 160px;
-    padding: 0.8rem;
-    justify-content: space-between;
+    padding: 1rem;
   }
   
   .sponsors-grid .sponsor-logo {
     min-height: 180px;
-    align-items: flex-start;
-    padding-top: 0px;
+    align-items: flex-end;
+    padding-top: 40px;
+    padding-bottom: 15px;
+    justify-content: center;
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 100px;
+    height: 80px !important;
+    width: 80% !important;
+    max-width: 80% !important;
+  }
+  
+  .sponsor-card:nth-child(1) .sponsor-logo img {
+    height: 80px !important;
+    width: 80% !important;
+    max-width: 80% !important;
+  }
+  
+  .sponsor-card:nth-child(2) .sponsor-logo img {
+    height: 80px !important;
+    width: 80% !important;
+    max-width: 80% !important;
+    transform: translateX(-3px);
+  }
+  
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 80px !important;
+    width: 70% !important;
+    max-width: 70% !important;
+    transform: translateY(8px);
   }
   
   .sponsor-description {
     font-size: 0.8rem;
   }
-}
 
-/* Extra small screens */
-@media (max-width: 360px) {
-  .header {
-    width: 98%;
-    margin: 15px auto 15px auto;
-    min-height: 120px;
-    border-radius: 40px;
+  .content-cards {
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .event-card, .feedback-card {
+    min-width: 250px;
+    padding: 1.5rem;
+  }
+
+  .bottom-section {
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .chat-card {
+    min-width: 200px;
+    padding: 1.5rem;
+  }
+
+  .qr-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+
+  .qr-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .description {
+    font-size: 1rem;
+    padding: 0 0.5rem;
   }
   
-  .nav-container {
-    padding: 0 15px;
-    gap: 15px;
-    justify-content: center;
+  .countdown {
+    gap: 0.3rem;
   }
   
-  .logo-image {
-    width: 35px;
-    height: 35px;
+  .countdown-item {
+    min-width: 50px;
+    padding: 0.5rem;
   }
   
-  .nav-menu {
-    gap: 8px;
-    flex: none;
+  .countdown-number {
+    font-size: 1.2rem;
   }
   
-  .nav-link {
-    font-size: 0.8rem;
-    padding: 4px 6px;
-  }
-  
-  .sign-in-btn {
-    padding: 6px 16px;
-    font-size: 0.8rem;
-    margin: 0;
-    align-self: center;
-  }
-  
-  .main-title {
-    font-size: 2rem;
+  .countdown-label {
+    font-size: 0.6rem;
   }
 }
 
@@ -882,7 +1235,54 @@ main {
   flex-direction: column;
 }
 
-.content-container {
-  flex: 1; /* This makes it grow and push footer down */
-  padding-bottom: 2rem; /* Optional spacing above footer */
+  .content-container {
+    flex: 1; /* This makes it grow and push footer down */
+    padding-bottom: 2rem; /* Optional spacing above footer */
+  }
+
+/* Force mobile sponsor logo positioning - SIMPLE APPROACH */
+@media (max-width: 480px) {
+  .diageo-card .sponsor-logo {
+    padding-top: 80px !important;
+    padding-bottom: 30px !important;
+    min-height: 250px !important;
+    background-color: rgba(255, 0, 0, 0.2) !important; /* TEST - Red background */
+  }
+  
+  .athena-card .sponsor-logo {
+    padding-top: 80px !important;
+    padding-bottom: 30px !important;
+    min-height: 250px !important;
+    background-color: rgba(0, 255, 0, 0.2) !important; /* TEST - Green background */
+  }
+  
+  .diageo-card .sponsor-logo img {
+    margin-top: 20px !important;
+  }
+  
+  .athena-card .sponsor-logo img {
+    margin-top: 20px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .diageo-card .sponsor-logo {
+    padding-top: 60px !important;
+    padding-bottom: 20px !important;
+    min-height: 200px !important;
+  }
+  
+  .athena-card .sponsor-logo {
+    padding-top: 60px !important;
+    padding-bottom: 20px !important;
+    min-height: 200px !important;
+  }
+  
+  .diageo-card .sponsor-logo img {
+    margin-top: 15px !important;
+  }
+  
+  .athena-card .sponsor-logo img {
+    margin-top: 15px !important;
+  }
 }

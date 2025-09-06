@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import athenaLogo from './Images/athena.png';
 import diageoLogo from './Images/diageoLogo.png';
 import hwuLogo from './Images/hwu.png';
 
 const Sponsors = () => {
+  // Mobile detection for responsive logo positioning
+  const isMobile = window.innerWidth <= 480;
+
   return (
     <div className="sponsors-page">
       <div className="sponsors-container">
@@ -16,17 +19,35 @@ const Sponsors = () => {
           </div>
           
           <div className="sponsors-grid">
-            <div className="sponsor-card">
-              <div className="sponsor-logo">
-                <img src={diageoLogo} alt="Diageo Logo" />
+            <div className="sponsor-card diageo-card">
+              <div className="sponsor-logo" style={{
+                paddingTop: isMobile ? '0px' : '15px',
+                paddingBottom: isMobile ? '0px' : '15px',
+                minHeight: isMobile ? '80px' : '300px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'center'
+              }}>
+                <img src={diageoLogo} alt="Diageo Logo" style={{
+                  marginTop: isMobile ? '0px' : '0px'
+                }} />
               </div>
               <div className="sponsor-divider"></div>
               <div className="sponsor-description">24 hr Hackathon 2025</div>
             </div>
             
-            <div className="sponsor-card">
-              <div className="sponsor-logo">
-                <img src={athenaLogo} alt="Athena SWAN Logo" />
+            <div className="sponsor-card athena-card">
+              <div className="sponsor-logo" style={{
+                paddingTop: isMobile ? '0px' : '15px',
+                paddingBottom: isMobile ? '0px' : '15px',
+                minHeight: isMobile ? '80px' : '300px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'center'
+              }}>
+                <img src={athenaLogo} alt="Athena SWAN Logo" style={{
+                  marginTop: isMobile ? '0px' : '0px'
+                }} />
               </div>
               <div className="sponsor-divider"></div>
               <div className="sponsor-description">Social Events</div>

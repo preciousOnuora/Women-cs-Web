@@ -94,6 +94,12 @@
   font-size: 1.2rem;
 }
 
+.social-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
 .contact-info p {
   display: flex;
   align-items: center;
@@ -182,6 +188,22 @@
   
   .social-links {
     justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .social-links a {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .social-icon {
+    width: 50px;
+    height: 50px;
+    margin: -5px;
+  }
+  
+  .social-links i {
+    font-size: 1rem;
   }
 }
 
@@ -196,5 +218,25 @@
   
   .footer-bottom-content {
     padding: 0 0.5rem;
+  }
+  
+  .social-links {
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+  
+  .social-links a {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .social-icon {
+    width: 45px;
+    height: 45px;
+    margin: -5px;
+  }
+  
+  .social-links i {
+    font-size: 0.9rem;
   }
 }

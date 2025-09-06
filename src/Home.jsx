@@ -1,5 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import qrCode from './Images/qrCode.jpeg';
+import CountdownTimer from './components/CountdownTimer';
+import { EVENT_CONFIG } from './config/eventConfig';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,10 +18,8 @@ const Home = () => {
         
         <div className="content-cards">
           <div className="event-card">
-            <h2>Upcoming Event!</h2>
-            <div className="countdown">
-              <span className="time">12 DAYS 5HRS 3 MIN 3 SECS</span>
-            </div>
+            <h2>{EVENT_CONFIG.eventName}</h2>
+            <CountdownTimer />
           </div>
           
           <div className="feedback-card">
@@ -31,7 +32,7 @@ const Home = () => {
           <div className="chat-card">
             <h3>Join our Group Chat!</h3>
             <div className="qr-placeholder">
-              <div className="qr-pattern"></div>
+              <img src={qrCode} alt="QR Code for Group Chat" className="qr-image" />
             </div>
           </div>
           
