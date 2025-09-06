@@ -86,7 +86,7 @@ const Events = () => {
   };
 
   const upcomingEvents = events.filter(event => isEventUpcoming(event.date));
-  const pastEvents = events.filter(event => !isEventUpcoming(event.date));
+  // const pastEvents = events.filter(event => !isEventUpcoming(event.date));
 
   return (
     <div className="events-page">

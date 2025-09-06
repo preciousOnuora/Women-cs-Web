@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import athenaLogo from './Images/athena.png';
 import diageoLogo from './Images/diageoLogo.png';
 import hwuLogo from './Images/hwu.png';
