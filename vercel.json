@@ -25,7 +25,6 @@
     }
   ],
   "env": {
-    "MONGODB_URI": "@mongodb_uri",
     "NODE_ENV": "production"
   }
 }
