@@ -4,7 +4,7 @@ export const EVENT_CONFIG = {
   // Target date for the upcoming event
   // Format: new Date(year, month-1, day, hour, minute, second)
   // Note: month is 0-indexed (0 = January, 1 = February, etc.)
-  targetDate: new Date(2026, 1, 8, 0, 0, 0), // February 8th, 2026 at midnight
+  targetDate: new Date(2026, 1, 7, 0, 0, 0), // February 7th, 2026 at midnight
   
   // Event details
   eventName: "Upcoming Event!",

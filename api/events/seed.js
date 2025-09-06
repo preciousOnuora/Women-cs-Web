@@ -60,7 +60,7 @@ const sampleEvents = [
   {
     title: "24HR HACKATHON 2026",
     description: "Work in Teams of 5 to collaborate, code, and innovate! This event features inspiring talks on career journeys, networking opportunities with industry professionals, and the chance to win prizes. Fuel your creativity with free pizza and showcase your skills in this unmissable coding adventure!",
-    date: new Date('2026-02-08'),
+    date: new Date('2026-02-07'),
     time: "10:30 AM - 10:30 AM (24 hours)",
     location: "Heriot-Watt Campus, Robotarium",
     maxParticipants: 100,

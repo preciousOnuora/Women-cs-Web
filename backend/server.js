@@ -293,6 +293,34 @@ app.post('/api/events', async (req, res) => {
   }
 });
 
+// Delete an event
+app.delete('/api/events/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const event = await Event.findByIdAndDelete(id);
+    
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: 'Event not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Event deleted successfully'
+    });
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting event. Please try again.',
+      error: error.message
+    });
+  }
+});
+
 // Serve React app for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
