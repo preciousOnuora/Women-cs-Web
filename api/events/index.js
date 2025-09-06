@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/womenatcs';
 
-// Connect to MongoDB
+// Connect to MongoDB with better error handling for serverless
 const connectDB = async () => {
-  if (mongoose.connections[0].readyState) {
+  // Check if already connected
+  if (mongoose.connections[0].readyState === 1) {
     return;
   }
   
@@ -13,10 +14,15 @@ const connectDB = async () => {
     await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      bufferMaxEntries: 0, // Disable mongoose buffering
+      bufferCommands: false, // Disable mongoose buffering
     });
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('MongoDB connection error:', error);
+    throw error; // Re-throw to handle in the handler
   }
 };
 
@@ -66,9 +72,6 @@ const eventSchema = new mongoose.Schema({
 const Event = mongoose.model('Event', eventSchema);
 
 module.exports = async function handler(req, res) {
-  // Connect to database
-  await connectDB();
-  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -80,11 +83,28 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // Connect to database with error handling
+  try {
+    await connectDB();
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Database connection failed',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+
   if (req.method === 'GET') {
     try {
+      console.log('Fetching events...');
+      console.log('MongoDB URI configured:', !!process.env.MONGODB_URI);
+      console.log('Mongoose connection state:', mongoose.connections[0].readyState);
+      
       // Check if hackathon 2026 event exists, if not create it
       const existingHackathon = await Event.findOne({ title: "24HR HACKATHON 2026" });
       if (!existingHackathon) {
+        console.log('Creating hackathon 2026 event...');
         const hackathonEvent = new Event({
           title: "24HR HACKATHON 2026",
           description: "Work in Teams of 5 to collaborate, code, and innovate! This event features inspiring talks on career journeys, networking opportunities with industry professionals, and the chance to win prizes. Fuel your creativity with free pizza and showcase your skills in this unmissable coding adventure!",
@@ -103,6 +123,7 @@ module.exports = async function handler(req, res) {
       const events = await Event.find({ isActive: true })
         .sort({ date: 1 });
 
+      console.log(`Found ${events.length} events`);
       res.status(200).json({
         success: true,
         data: events
@@ -112,7 +133,7 @@ module.exports = async function handler(req, res) {
       res.status(500).json({
         success: false,
         message: 'Error fetching events.',
-        error: error.message
+        error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
       });
     }
   } else if (req.method === 'POST') {
