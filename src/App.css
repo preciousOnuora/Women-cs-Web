@@ -267,7 +267,7 @@ main {
 }
 
 .feedback-card {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+  background: linear-gradient(135deg, #c3d2f1, #9f75f5);
   padding: 2rem;
   border-radius: 20px;
   min-width: 300px;
@@ -311,7 +311,7 @@ main {
 }
 
 .chat-card {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+  background: linear-gradient(135deg,  #c3d2f1, #9f75f5);
   padding: 2rem;
   border-radius: 20px;
   text-align: center;
