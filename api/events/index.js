@@ -100,6 +100,7 @@ module.exports = async function handler(req, res) {
       console.log('Fetching events...');
       console.log('MongoDB URI configured:', !!process.env.MONGODB_URI);
       console.log('Mongoose connection state:', mongoose.connections[0].readyState);
+      console.log('Deployment timestamp:', new Date().toISOString());
       
       // Check if hackathon 2026 event exists, if not create it
       const existingHackathon = await Event.findOne({ title: "24HR HACKATHON 2026" });
