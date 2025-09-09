@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/womenatcs';
 
+console.log('MONGODB_URI configured:', !!process.env.MONGODB_URI);
+console.log('MONGODB_URI value:', process.env.MONGODB_URI ? 'Set' : 'Not set');
+
 // Connect to MongoDB with better error handling for serverless
 const connectDB = async () => {
   // Check if already connected
