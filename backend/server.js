@@ -301,16 +301,32 @@ app.get('/api/contact', async (req, res) => {
 // Get all events
 app.get('/api/events', async (req, res) => {
   try {
-    // Check if mongoose is connected
-    if (mongoose.connection.readyState !== 1) {
-      console.error('MongoDB not connected. ReadyState:', mongoose.connection.readyState);
-      return res.status(500).json({
-        success: false,
-        message: 'Database connection failed',
-        error: 'MongoDB not connected'
+    // Wait for database connection with timeout
+    const waitForConnection = () => {
+      return new Promise((resolve, reject) => {
+        if (mongoose.connection.readyState === 1) {
+          resolve();
+          return;
+        }
+        
+        const timeout = setTimeout(() => {
+          reject(new Error('Database connection timeout'));
+        }, 10000); // 10 second timeout
+        
+        mongoose.connection.once('connected', () => {
+          clearTimeout(timeout);
+          resolve();
+        });
+        
+        mongoose.connection.once('error', (err) => {
+          clearTimeout(timeout);
+          reject(err);
+        });
       });
-    }
+    };
 
+    await waitForConnection();
+    
     const events = await Event.find({ isActive: true }).sort({ date: 1 });
     console.log('Successfully fetched events:', events.length);
     res.json({
