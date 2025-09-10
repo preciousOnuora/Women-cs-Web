@@ -17,7 +17,8 @@ const Events = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('/api/events');
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:3001/api/events';
+      const response = await fetch(apiUrl);
       const result = await response.json();
 
       if (result.success) {
@@ -43,7 +44,8 @@ const Events = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/events/register', {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events/register' : 'http://localhost:3001/api/events/register';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

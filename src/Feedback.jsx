@@ -27,7 +27,8 @@ const Feedback = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/api/feedback', {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/feedback' : 'http://localhost:3001/api/feedback';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

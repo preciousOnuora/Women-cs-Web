@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path'); 
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 
@@ -321,11 +321,6 @@ app.delete('/api/events/:id', async (req, res) => {
   }
 });
 
-// Serve React app for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Server error:', error);
@@ -336,10 +331,18 @@ app.use((error, req, res, next) => {
   });
 });
 
+// Serve React app for all other routes (must be last)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
+
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Only start the server if not in Vercel environment
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
