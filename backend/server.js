@@ -21,8 +21,14 @@ mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('Connected to MongoDB Atlas'))
-.catch(err => console.error('MongoDB connection error:', err));
+.then(() => {
+  console.log('Connected to MongoDB Atlas');
+  console.log('MongoDB URI:', MONGODB_URI.replace(/\/\/.*@/, '//***:***@')); // Hide credentials in logs
+})
+.catch(err => {
+  console.error('MongoDB connection error:', err);
+  console.error('MongoDB URI being used:', MONGODB_URI.replace(/\/\/.*@/, '//***:***@')); // Hide credentials in logs
+});
 
 // Feedback Schema
 const feedbackSchema = new mongoose.Schema({
@@ -158,6 +164,31 @@ const Event = mongoose.model('Event', eventSchema);
 
 // API Routes
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState;
+  const dbStatusText = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting'
+  };
+  
+  res.json({
+    success: true,
+    status: 'OK',
+    database: {
+      status: dbStatusText[dbStatus] || 'unknown',
+      readyState: dbStatus
+    },
+    environment: {
+      nodeEnv: process.env.NODE_ENV,
+      hasMongoUri: !!process.env.MONGODB_URI,
+      vercel: !!process.env.VERCEL
+    }
+  });
+});
+
 // Feedback form submission
 app.post('/api/feedback', async (req, res) => {
   try {
@@ -240,7 +271,18 @@ app.get('/api/contact', async (req, res) => {
 // Get all events
 app.get('/api/events', async (req, res) => {
   try {
+    // Check if mongoose is connected
+    if (mongoose.connection.readyState !== 1) {
+      console.error('MongoDB not connected. ReadyState:', mongoose.connection.readyState);
+      return res.status(500).json({
+        success: false,
+        message: 'Database connection failed',
+        error: 'MongoDB not connected'
+      });
+    }
+
     const events = await Event.find({ isActive: true }).sort({ date: 1 });
+    console.log('Successfully fetched events:', events.length);
     res.json({
       success: true,
       data: events
@@ -249,7 +291,7 @@ app.get('/api/events', async (req, res) => {
     console.error('Error fetching events:', error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching events.',
+      message: 'Database connection failed',
       error: error.message
     });
   }
