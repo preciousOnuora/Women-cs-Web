@@ -17,18 +17,34 @@ app.use(express.static(path.join(__dirname, 'build')));
 // MongoDB Atlas Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/womenatcs';
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB Atlas');
-  console.log('MongoDB URI:', MONGODB_URI.replace(/\/\/.*@/, '//***:***@')); // Hide credentials in logs
-})
-.catch(err => {
-  console.error('MongoDB connection error:', err);
-  console.error('MongoDB URI being used:', MONGODB_URI.replace(/\/\/.*@/, '//***:***@')); // Hide credentials in logs
-});
+console.log('Environment check:');
+console.log('- NODE_ENV:', process.env.NODE_ENV);
+console.log('- VERCEL:', process.env.VERCEL);
+console.log('- MONGODB_URI exists:', !!process.env.MONGODB_URI);
+console.log('- MONGODB_URI value:', process.env.MONGODB_URI ? 
+  process.env.MONGODB_URI.replace(/\/\/.*@/, '//***:***@') : 'NOT SET');
+
+// Connect to MongoDB with retry logic
+const connectWithRetry = () => {
+  mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+    socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+  })
+  .then(() => {
+    console.log('✅ Connected to MongoDB Atlas');
+    console.log('MongoDB URI:', MONGODB_URI.replace(/\/\/.*@/, '//***:***@'));
+  })
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err.message);
+    console.error('MongoDB URI being used:', MONGODB_URI.replace(/\/\/.*@/, '//***:***@'));
+    console.log('Retrying connection in 5 seconds...');
+    setTimeout(connectWithRetry, 5000);
+  });
+};
+
+connectWithRetry();
 
 // Feedback Schema
 const feedbackSchema = new mongoose.Schema({
@@ -163,6 +179,20 @@ const eventSchema = new mongoose.Schema({
 const Event = mongoose.model('Event', eventSchema);
 
 // API Routes
+
+// Simple test endpoint (no database required)
+app.get('/api/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Server is working!',
+    timestamp: new Date().toISOString(),
+    environment: {
+      nodeEnv: process.env.NODE_ENV,
+      vercel: !!process.env.VERCEL,
+      hasMongoUri: !!process.env.MONGODB_URI
+    }
+  });
+});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
