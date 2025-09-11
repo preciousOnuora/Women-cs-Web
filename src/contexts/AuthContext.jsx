@@ -29,7 +29,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/auth?action=login', {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=login' : 'http://localhost:3001/api/auth?action=login';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +58,8 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await fetch('/api/auth?action=register', {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=register' : 'http://localhost:3001/api/auth?action=register';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +88,8 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       // Call logout API
-      await fetch('/api/auth?action=logout', {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=logout' : 'http://localhost:3001/api/auth?action=logout';
+      await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -106,7 +109,8 @@ export const AuthProvider = ({ children }) => {
 
   const forgotPassword = async (email) => {
     try {
-      const response = await fetch('/api/auth?action=forgot-password', {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=forgot-password' : 'http://localhost:3001/api/auth?action=forgot-password';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +128,8 @@ export const AuthProvider = ({ children }) => {
 
   const resetPassword = async (token, password) => {
     try {
-      const response = await fetch('/api/auth?action=reset-password', {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=reset-password' : 'http://localhost:3001/api/auth?action=reset-password';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

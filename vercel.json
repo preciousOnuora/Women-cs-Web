@@ -2,7 +2,31 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/server.js",
+      "src": "api/auth/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/contact/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/feedback/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/events/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/events/register/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/events/[eventId]/unregister/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/user/events/index.js",
       "use": "@vercel/node"
     },
     {
@@ -13,14 +37,38 @@
       }
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/server.js"
+      "src": "/api/auth/(.*)",
+      "dest": "/api/auth/index.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "/api/contact",
+      "dest": "/api/contact/index.js"
+    },
+    {
+      "src": "/api/feedback",
+      "dest": "/api/feedback/index.js"
+    },
+    {
+      "src": "/api/events",
+      "dest": "/api/events/index.js"
+    },
+    {
+      "src": "/api/events/register",
+      "dest": "/api/events/register/index.js"
+    },
+    {
+      "src": "/api/events/([^/]+)/unregister",
+      "dest": "/api/events/[eventId]/unregister/index.js"
+    },
+    {
+      "src": "/api/user/events",
+      "dest": "/api/user/events/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "env": {
