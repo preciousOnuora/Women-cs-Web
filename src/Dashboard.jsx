@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './contexts/AuthContext';
 import './Dashboard.css';
 
@@ -8,16 +8,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      fetchUserEvents();
-    }
-  }, [isAuthenticated, user]);
-
-  const fetchUserEvents = async () => {
+  const fetchUserEvents = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/user/events', {
+      const response = await fetch(`/api/events?userId=${user._id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -37,17 +31,27 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user._id]);
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      fetchUserEvents();
+    }
+  }, [isAuthenticated, user, fetchUserEvents]);
 
   const handleUnregisterEvent = async (eventId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/events/${eventId}/unregister`, {
+      const response = await fetch(`/api/events`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ 
+          action: 'unregister',
+          eventId: eventId 
+        }),
       });
 
       const result = await response.json();

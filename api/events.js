@@ -68,16 +68,31 @@ module.exports = async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
-      // Get all events
-      const events = await Event.find().sort({ date: 1 });
+      // Check if this is a request for user events
+      const { userId } = req.query;
       
-      res.status(200).json({
-        success: true,
-        data: events
-      });
+      if (userId) {
+        // Get events for a specific user (for dashboard)
+        const events = await Event.find({ 
+          participants: userId 
+        }).sort({ date: 1 });
+        
+        res.status(200).json({
+          success: true,
+          data: events
+        });
+      } else {
+        // Get all events
+        const events = await Event.find().sort({ date: 1 });
+        
+        res.status(200).json({
+          success: true,
+          data: events
+        });
+      }
     } else if (req.method === 'POST') {
-      // Handle event registration
-      const { eventId } = body;
+      // Handle event registration/unregistration
+      const { action, eventId } = body;
       
       if (!eventId) {
         return res.status(400).json({
@@ -86,11 +101,19 @@ module.exports = async function handler(req, res) {
         });
       }
 
-      // For now, just return success (we'll implement full registration later)
-      res.status(200).json({
-        success: true,
-        message: 'Registration successful'
-      });
+      if (action === 'unregister') {
+        // For now, just return success (we'll implement full unregistration later)
+        res.status(200).json({
+          success: true,
+          message: 'Unregistration successful'
+        });
+      } else {
+        // For now, just return success (we'll implement full registration later)
+        res.status(200).json({
+          success: true,
+          message: 'Registration successful'
+        });
+      }
     } else {
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
