@@ -400,6 +400,8 @@
 
   .events-grid {
     max-width: 800px; /* Ensure same width as past events */
+    margin: 0 auto; /* Center the grid */
+    padding: 0 1rem; /* Add horizontal padding */
   }
 
   .upcoming-event-card {
@@ -487,6 +489,8 @@
 
   .events-grid {
     max-width: 800px; /* Ensure same width as past events */
+    margin: 0 auto; /* Center the grid */
+    padding: 0 0.5rem; /* Add horizontal padding */
   }
 
   .upcoming-event-card {

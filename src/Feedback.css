@@ -220,6 +220,7 @@
   .feedback-content {
     padding: 1.5rem;
     margin-top: 1rem; /* Additional spacing */
+    overflow: hidden; /* Prevent content from overflowing */
   }
   
   .form-section {
@@ -231,6 +232,9 @@
     align-items: center;
     gap: 1rem;
     margin-top: 2rem;
+    padding: 0 1rem; /* Add horizontal padding */
+    width: 100%;
+    box-sizing: border-box; /* Include padding in width calculation */
   }
   
   .submit-btn,
@@ -249,6 +253,7 @@
   .feedback-container {
     margin-top: 1.5rem; /* Reduce space on smaller screens */
     padding: 0 0.5rem;
+    overflow: hidden; /* Prevent content from overflowing */
   }
   
   .page-title {
@@ -275,6 +280,9 @@
   .form-actions {
     gap: 0.8rem;
     margin-top: 1.5rem;
+    padding: 0 0.5rem; /* Add horizontal padding */
+    width: 100%;
+    box-sizing: border-box; /* Include padding in width calculation */
   }
   
   .submit-btn,
