@@ -1251,7 +1251,7 @@ main {
 /* Clean mobile sponsor styling - no overlapping or background issues */
 @media (max-width: 480px) {
   .sponsors-grid .sponsor-logo {
-    min-height: 80px !important;
+    min-height: 120px !important;
     padding: 0.5rem !important;
     background: transparent !important;
     border-radius: 8px !important;
@@ -1262,11 +1262,21 @@ main {
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 80px !important;
+    height: 120px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
     transform: none !important;
+    margin: 0 !important;
+  }
+  
+  /* Move Heriot-Watt image up specifically on mobile */
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 120px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: translateY(-20px) !important;
     margin: 0 !important;
   }
   
@@ -1280,12 +1290,27 @@ main {
 
 @media (max-width: 360px) {
   .sponsors-grid .sponsor-logo {
-    min-height: 60px !important;
+    min-height: 100px !important;
     padding: 0.25rem !important;
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 60px !important;
+    height: 100px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+  
+  /* Move Heriot-Watt image up on smaller screens too */
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 100px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: translateY(-15px) !important;
+    margin: 0 !important;
   }
   
   .sponsor-card {
