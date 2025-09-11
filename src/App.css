@@ -984,10 +984,10 @@ main {
     min-height: 80px;
     align-items: center;
     justify-content: center;
-    padding: 0.25rem;
+    padding: 0.5rem;
     background: transparent;
     border-radius: 8px;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
   }
   
   .sponsors-grid .sponsor-logo img {
@@ -1248,49 +1248,48 @@ main {
     padding-bottom: 2rem; /* Optional spacing above footer */
   }
 
-/* Force mobile sponsor logo positioning - SIMPLE APPROACH */
+/* Clean mobile sponsor styling - no overlapping or background issues */
 @media (max-width: 480px) {
-  .diageo-card .sponsor-logo {
-    padding-top: 80px !important;
-    padding-bottom: 30px !important;
-    min-height: 250px !important;
-    background-color: rgba(255, 0, 0, 0.2) !important; /* TEST - Red background */
+  .sponsors-grid .sponsor-logo {
+    min-height: 80px !important;
+    padding: 0.5rem !important;
+    background: transparent !important;
+    border-radius: 8px !important;
+    margin-bottom: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   
-  .athena-card .sponsor-logo {
-    padding-top: 80px !important;
-    padding-bottom: 30px !important;
-    min-height: 250px !important;
-    background-color: rgba(0, 255, 0, 0.2) !important; /* TEST - Green background */
+  .sponsors-grid .sponsor-logo img {
+    height: 80px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 !important;
   }
   
-  .diageo-card .sponsor-logo img {
-    margin-top: 20px !important;
-  }
-  
-  .athena-card .sponsor-logo img {
-    margin-top: 20px !important;
+  .sponsor-card {
+    margin: 0 auto !important;
+    max-width: 350px !important;
+    width: 100% !important;
+    padding: 1.5rem !important;
   }
 }
 
 @media (max-width: 360px) {
-  .diageo-card .sponsor-logo {
-    padding-top: 60px !important;
-    padding-bottom: 20px !important;
-    min-height: 200px !important;
+  .sponsors-grid .sponsor-logo {
+    min-height: 60px !important;
+    padding: 0.25rem !important;
   }
   
-  .athena-card .sponsor-logo {
-    padding-top: 60px !important;
-    padding-bottom: 20px !important;
-    min-height: 200px !important;
+  .sponsors-grid .sponsor-logo img {
+    height: 60px !important;
   }
   
-  .diageo-card .sponsor-logo img {
-    margin-top: 15px !important;
-  }
-  
-  .athena-card .sponsor-logo img {
-    margin-top: 15px !important;
+  .sponsor-card {
+    max-width: 300px !important;
+    padding: 1rem !important;
   }
 }
