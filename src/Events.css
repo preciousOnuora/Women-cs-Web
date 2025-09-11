@@ -209,7 +209,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   text-align: center;
-  max-width: 90%;
+  max-width: 95%;
   margin: 0 auto;
   width: 100%;
 }
@@ -409,7 +409,7 @@
 
   .upcoming-event-card {
     padding: 2rem;
-    max-width: 90%; /* Make wider to match past events better */
+    max-width: 95%; /* Make even wider on mobile */
     width: 100%;
     margin: 0 auto;
   }
@@ -499,7 +499,7 @@
   }
 
   .upcoming-event-card {
-    max-width: 90%; /* Make wider to match past events better */
+    max-width: 95%; /* Make even wider on mobile */
     width: 100%;
     margin: 0 auto;
   }

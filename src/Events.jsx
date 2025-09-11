@@ -229,7 +229,7 @@ const Events = () => {
                 </div>
                 <div className="datetime">
                   <span className="detail-label">Date & Time:</span>
-                  <span className="detail-value">7TH FEB 2026 10:30AM - 8TH FEB 2026 10:30AM</span>
+                  <span className="detail-value">7TH FEB 2025 10:30AM - 8TH FEB 2025 10:30AM</span>
                 </div>
                 <div className="sponsor">
                   <span className="detail-label">Sponsored by:</span>
