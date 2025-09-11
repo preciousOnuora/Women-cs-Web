@@ -57,6 +57,8 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
+  align-items: center;
 }
 
 /* Event Card */
@@ -209,6 +211,7 @@
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .upcoming-event-card:hover {
@@ -407,6 +410,8 @@
   .upcoming-event-card {
     padding: 2rem;
     max-width: 800px; /* Match past events width */
+    width: 100%;
+    margin: 0 auto;
   }
 
   .event-title {
@@ -495,6 +500,8 @@
 
   .upcoming-event-card {
     max-width: 800px; /* Match past events width */
+    width: 100%;
+    margin: 0 auto;
   }
 
   .passed-title {
