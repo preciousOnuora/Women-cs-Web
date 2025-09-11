@@ -15,7 +15,8 @@ body {
 
 /* Circular Header Styles */
 .header {
-  width: 65%;
+  width: 75%;
+  min-width: 800px;
   height: 60px;
   background: #fff;
   border-radius: 100px;
@@ -69,21 +70,23 @@ body {
 .nav-menu {
   display: flex;
   flex-direction: row;
-  gap: 45px;
+  gap: 35px;
   margin: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   flex: 1;
-  justify-content: center;
+  min-width: 0;
 }
 
 .nav-link {
   color: #333;
   text-decoration: none;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: color 0.2s;
   display: inline-block;
+  white-space: nowrap;
+  padding: 4px 8px;
 }
 
 .nav-link:hover {
@@ -95,9 +98,11 @@ body {
   color: #333;
   text-decoration: none;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: color 0.2s;
   display: inline-block;
+  white-space: nowrap;
+  padding: 4px 8px;
 }
 
 .nav-menu a:hover {
@@ -142,15 +147,16 @@ body {
 .user-menu {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-left: 20px;
+  gap: 12px;
+  margin-left: 15px;
   flex-shrink: 0;
 }
 
 .welcome-text {
   color: #333;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
 
 .sign-out-btn {
@@ -691,9 +697,32 @@ main {
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .header {
+    width: 85%;
+    min-width: 700px;
+  }
+  
+  .nav-menu {
+    gap: 25px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header {
+    width: 90%;
+    min-width: 600px;
+  }
+  
+  .nav-menu {
+    gap: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .header {
     width: 95%;
+    min-width: unset;
     height: auto;
     min-height: 60px;
     padding: 10px 0;
