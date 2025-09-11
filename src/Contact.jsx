@@ -20,7 +20,7 @@ const Contact = () => {
     e.preventDefault();
     
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/contact' : 'http://localhost:3001/api/contact';
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/other?action=contact' : 'http://localhost:3001/api/other?action=contact';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {

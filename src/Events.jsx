@@ -78,7 +78,7 @@ const Events = () => {
       const token = localStorage.getItem('token');
       
       // Use appropriate API URL based on environment
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events/register' : 'http://localhost:3001/api/events/register';
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:3001/api/events';
       
       // Send registration request to API
       const response = await fetch(apiUrl, {
