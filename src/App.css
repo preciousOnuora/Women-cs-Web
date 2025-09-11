@@ -1308,13 +1308,24 @@ main {
   }
   
   /* Move Heriot-Watt image up much more and increase size significantly */
+  .sponsor-card:nth-child(3) .sponsor-logo {
+    min-height: 120px !important;
+    padding: 0.5rem !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+  }
+  
   .sponsor-card:nth-child(3) .sponsor-logo img {
     height: 180px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
-    transform: translateY(-80px) !important;
+    transform: none !important;
     margin: 0 !important;
+    position: relative !important;
+    top: -40px !important;
   }
   
   .sponsor-card {
@@ -1352,13 +1363,24 @@ main {
   }
   
   /* Move Heriot-Watt image up much more on smaller screens too */
+  .sponsor-card:nth-child(3) .sponsor-logo {
+    min-height: 100px !important;
+    padding: 0.25rem !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+  }
+  
   .sponsor-card:nth-child(3) .sponsor-logo img {
     height: 160px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
-    transform: translateY(-50px) !important;
+    transform: none !important;
     margin: 0 !important;
+    position: relative !important;
+    top: -30px !important;
   }
   
   .sponsor-card {
