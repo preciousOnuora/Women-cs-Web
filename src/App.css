@@ -693,28 +693,29 @@ main {
 /* Responsive Design */
 @media (max-width: 768px) {
   .header {
-    width: 85%;
-    height: 50px;
-    min-height: 50px;
-    padding: 8px 0;
+    width: 95%;
+    height: auto;
+    min-height: 60px;
+    padding: 10px 0;
     margin: 15px auto 15px auto;
   }
   
   .nav-container {
-    flex-direction: row;
-    gap: 8px;
-    padding: 0 20px;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 15px;
+    justify-content: center;
     align-items: center;
-    height: 100%;
+    height: auto;
   }
 
   .nav-menu {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    flex: 1;
+    gap: 12px;
+    flex: none;
     order: 2;
+    margin: 5px 0;
   }
   
   .logo {
@@ -726,7 +727,7 @@ main {
   .auth-buttons, .user-menu {
     order: 3;
     margin-left: 0;
-    margin-top: 0;
+    margin-top: 5px;
   }
   
   .sign-in-btn {
@@ -839,57 +840,66 @@ main {
   }
   
   .sponsors-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 1.5rem;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
   }
   
   .sponsor-card {
     min-height: 200px;
-    padding: 1.2rem;
+    padding: 1.5rem;
+    margin: 0 auto;
+    max-width: 400px;
+    width: 100%;
   }
   
   .sponsors-grid .sponsor-logo {
-    min-height: 150px;
+    min-height: 120px;
     align-items: center;
-    padding-top: 0px;
+    justify-content: center;
+    padding: 1rem;
+    background: transparent;
+    border-radius: 8px;
+    margin-bottom: 1rem;
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 120px !important;
-    width: 90% !important;
-    max-width: 90% !important;
+    height: 100px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 !important;
   }
   
-  .sponsor-card:nth-child(2) .sponsor-logo img {
-    transform: translateX(-10px) translateY(-5px);
-  }
-  
+  .sponsor-card:nth-child(1) .sponsor-logo img,
+  .sponsor-card:nth-child(2) .sponsor-logo img,
   .sponsor-card:nth-child(3) .sponsor-logo img {
-    height: 120px !important;
-    width: 80% !important;
-    max-width: 80% !important;
-    transform: translateY(15px);
+    height: 100px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+    margin: 0 !important;
   }
 }
 
 @media (max-width: 480px) {
   .header {
-    width: 90%;
-    height: 45px;
-    min-height: 45px;
-    padding: 6px 0;
+    width: 95%;
+    height: auto;
+    min-height: 50px;
+    padding: 8px 0;
     border-radius: 50px;
     margin: 10px auto 10px auto;
   }
   
   .nav-container {
-    padding: 0 15px;
-    gap: 4px;
-    justify-content: space-between;
+    padding: 0 10px;
+    gap: 8px;
+    justify-content: center;
     align-items: center;
-    flex-direction: row;
-    height: 100%;
+    flex-direction: column;
+    height: auto;
   }
   
   .logo-image {
@@ -898,16 +908,17 @@ main {
   }
   
   .nav-menu {
-    gap: 4px;
-    flex: 1;
+    gap: 8px;
+    flex: none;
     order: 2;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
+    margin: 5px 0;
   }
   
   .nav-link {
     font-size: 0.7rem;
-    padding: 2px 4px;
+    padding: 3px 6px;
     white-space: nowrap;
   }
   
@@ -920,7 +931,7 @@ main {
   .auth-buttons, .user-menu {
     order: 3;
     margin-left: 0;
-    margin-top: 0;
+    margin-top: 5px;
   }
   
   .sign-in-btn {
@@ -964,40 +975,38 @@ main {
   .sponsor-card {
     min-height: 180px;
     padding: 1.5rem;
+    margin: 0 auto;
+    max-width: 350px;
+    width: 100%;
   }
   
   .sponsors-grid .sponsor-logo {
-    min-height: 200px;
-    align-items: flex-end;
-    padding-top: 50px;
-    padding-bottom: 20px;
+    min-height: 100px;
+    align-items: center;
     justify-content: center;
+    padding: 0.5rem;
+    background: transparent;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 100px !important;
-    width: 85% !important;
-    max-width: 85% !important;
+    height: 80px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 !important;
   }
   
-  .sponsor-card:nth-child(1) .sponsor-logo img {
-    height: 100px !important;
-    width: 85% !important;
-    max-width: 85% !important;
-  }
-  
-  .sponsor-card:nth-child(2) .sponsor-logo img {
-    height: 100px !important;
-    width: 85% !important;
-    max-width: 85% !important;
-    transform: translateX(-5px);
-  }
-  
+  .sponsor-card:nth-child(1) .sponsor-logo img,
+  .sponsor-card:nth-child(2) .sponsor-logo img,
   .sponsor-card:nth-child(3) .sponsor-logo img {
-    height: 100px !important;
-    width: 75% !important;
-    max-width: 75% !important;
-    transform: translateY(10px);
+    height: 80px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+    margin: 0 !important;
   }
   
   .sponsor-description {
@@ -1079,40 +1088,38 @@ main {
   .sponsor-card {
     min-height: 160px;
     padding: 1rem;
+    margin: 0 auto;
+    max-width: 300px;
+    width: 100%;
   }
   
   .sponsors-grid .sponsor-logo {
-    min-height: 180px;
-    align-items: flex-end;
-    padding-top: 40px;
-    padding-bottom: 15px;
+    min-height: 80px;
+    align-items: center;
     justify-content: center;
+    padding: 0.5rem;
+    background: transparent;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 80px !important;
-    width: 80% !important;
-    max-width: 80% !important;
+    height: 60px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: none !important;
+    margin: 0 !important;
   }
   
-  .sponsor-card:nth-child(1) .sponsor-logo img {
-    height: 80px !important;
-    width: 80% !important;
-    max-width: 80% !important;
-  }
-  
-  .sponsor-card:nth-child(2) .sponsor-logo img {
-    height: 80px !important;
-    width: 80% !important;
-    max-width: 80% !important;
-    transform: translateX(-3px);
-  }
-  
+  .sponsor-card:nth-child(1) .sponsor-logo img,
+  .sponsor-card:nth-child(2) .sponsor-logo img,
   .sponsor-card:nth-child(3) .sponsor-logo img {
-    height: 80px !important;
-    width: 70% !important;
-    max-width: 70% !important;
-    transform: translateY(8px);
+    height: 60px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    transform: none !important;
+    margin: 0 !important;
   }
   
   .sponsor-description {

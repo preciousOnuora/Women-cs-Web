@@ -398,8 +398,13 @@
     font-size: 2rem;
   }
 
+  .events-grid {
+    max-width: 800px; /* Ensure same width as past events */
+  }
+
   .upcoming-event-card {
     padding: 2rem;
+    max-width: 800px; /* Match past events width */
   }
 
   .event-title {
@@ -437,8 +442,13 @@
   }
 
   .sponsor-logo {
-    height: 120px;
-    max-width: 320px;
+    height: 100px;
+    max-width: 280px;
+    position: relative;
+    top: 0;
+    right: 0;
+    margin: 1rem auto;
+    display: block;
   }
 
   .event-details {
@@ -466,8 +476,21 @@
   }
 
   .sponsor-logo {
-    height: 100px;
-    max-width: 250px;
+    height: 80px;
+    max-width: 200px;
+    position: relative;
+    top: 0;
+    right: 0;
+    margin: 1rem auto;
+    display: block;
+  }
+
+  .events-grid {
+    max-width: 800px; /* Ensure same width as past events */
+  }
+
+  .upcoming-event-card {
+    max-width: 800px; /* Match past events width */
   }
 
   .passed-title {

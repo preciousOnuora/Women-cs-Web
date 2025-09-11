@@ -214,10 +214,12 @@
 @media (max-width: 768px) {
   .feedback-container {
     padding: 0 1rem;
+    margin-top: 2rem; /* Add space below navigation */
   }
   
   .feedback-content {
     padding: 1.5rem;
+    margin-top: 1rem; /* Additional spacing */
   }
   
   .form-section {
@@ -227,18 +229,26 @@
   .form-actions {
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
   }
   
   .submit-btn,
   .reset-btn {
     width: 100%;
     max-width: 300px;
+    margin: 0;
   }
 }
 
 @media (max-width: 480px) {
   .feedback-page {
     padding: 1rem 0;
+  }
+  
+  .feedback-container {
+    margin-top: 1.5rem; /* Reduce space on smaller screens */
+    padding: 0 0.5rem;
   }
   
   .page-title {
@@ -260,5 +270,16 @@
   
   .rating-star {
     font-size: 1.5rem;
+  }
+  
+  .form-actions {
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  
+  .submit-btn,
+  .reset-btn {
+    max-width: 280px;
+    padding: 12px 20px;
   }
 }
