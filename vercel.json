@@ -9,6 +9,20 @@
       }
     }
   ],
+  "functions": {
+    "api/status.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/hello.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/test/index.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/auth/index.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "routes": [
     {
       "src": "/(.*)",
