@@ -1277,7 +1277,7 @@ main {
 /* Clean mobile sponsor styling - no overlapping or background issues */
 @media (max-width: 480px) {
   .sponsors-grid .sponsor-logo {
-    min-height: 120px !important;
+    min-height: 180px !important;
     padding: 0.5rem !important;
     background: transparent !important;
     border-radius: 8px !important;
@@ -1288,7 +1288,7 @@ main {
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 120px !important;
+    height: 180px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
@@ -1296,13 +1296,24 @@ main {
     margin: 0 !important;
   }
   
-  /* Move Heriot-Watt image up specifically on mobile */
-  .sponsor-card:nth-child(3) .sponsor-logo img {
-    height: 120px !important;
+  /* Make Diageo and Athena SWAN images significantly bigger */
+  .sponsor-card:nth-child(1) .sponsor-logo img,
+  .sponsor-card:nth-child(2) .sponsor-logo img {
+    height: 200px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
-    transform: translateY(-20px) !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+  
+  /* Move Heriot-Watt image up a lot but only increase size slightly */
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 140px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: translateY(-40px) !important;
     margin: 0 !important;
   }
   
@@ -1316,12 +1327,12 @@ main {
 
 @media (max-width: 360px) {
   .sponsors-grid .sponsor-logo {
-    min-height: 100px !important;
+    min-height: 150px !important;
     padding: 0.25rem !important;
   }
   
   .sponsors-grid .sponsor-logo img {
-    height: 100px !important;
+    height: 150px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
@@ -1329,13 +1340,24 @@ main {
     margin: 0 !important;
   }
   
-  /* Move Heriot-Watt image up on smaller screens too */
-  .sponsor-card:nth-child(3) .sponsor-logo img {
-    height: 100px !important;
+  /* Make Diageo and Athena SWAN images significantly bigger on smaller screens */
+  .sponsor-card:nth-child(1) .sponsor-logo img,
+  .sponsor-card:nth-child(2) .sponsor-logo img {
+    height: 170px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
-    transform: translateY(-15px) !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+  
+  /* Move Heriot-Watt image up a lot on smaller screens too */
+  .sponsor-card:nth-child(3) .sponsor-logo img {
+    height: 120px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    transform: translateY(-30px) !important;
     margin: 0 !important;
   }
   
