@@ -207,6 +207,20 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // Parse JSON body if it exists
+  let body = {};
+  if (req.body) {
+    try {
+      body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    } catch (error) {
+      console.error('Error parsing request body:', error);
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid JSON in request body'
+      });
+    }
+  }
+
   // Connect to database with error handling
   try {
     await connectDB();
@@ -224,7 +238,7 @@ module.exports = async function handler(req, res) {
   try {
     if (action === 'login') {
       // Login logic
-      const { email, password } = req.body;
+      const { email, password } = body;
 
       if (!email || !password) {
         return res.status(400).json({
@@ -279,7 +293,7 @@ module.exports = async function handler(req, res) {
 
     } else if (action === 'register') {
       // Registration logic
-      const { firstName, lastName, email, password, university, studentStatus } = req.body;
+      const { firstName, lastName, email, password, university, studentStatus } = body;
 
       if (!firstName || !lastName || !email || !password) {
         return res.status(400).json({
@@ -329,7 +343,7 @@ module.exports = async function handler(req, res) {
 
     } else if (action === 'forgot-password') {
       // Forgot password logic
-      const { email } = req.body;
+      const { email } = body;
 
       if (!email) {
         return res.status(400).json({
@@ -372,7 +386,7 @@ module.exports = async function handler(req, res) {
 
     } else if (action === 'reset-password') {
       // Reset password logic
-      const { token, password } = req.body;
+      const { token, password } = body;
 
       if (!token || !password) {
         return res.status(400).json({
