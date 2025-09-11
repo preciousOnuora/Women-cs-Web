@@ -267,12 +267,12 @@ main {
 }
 
 .feedback-card {
-  background: linear-gradient(135deg, #c3d2f1, #9f75f5);
   padding: 2rem;
   border-radius: 20px;
   min-width: 300px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  height: 150px;
 }
 
 .feedback-card:hover {
@@ -286,6 +286,7 @@ main {
 }
 
 .help-btn {
+  margin-top: 0.45rem;
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -293,7 +294,8 @@ main {
   border-radius: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 1rem;
 }
 
 .help-btn:hover {
@@ -310,9 +312,7 @@ main {
   flex-wrap: wrap;
 }
 
-
 .chat-card {
-  background: linear-gradient(135deg,  #c3d2f1, #9f75f5);
   padding: 2rem;
   border-radius: 20px;
   text-align: center;

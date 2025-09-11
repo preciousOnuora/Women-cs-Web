@@ -1,53 +1,76 @@
-/* Events Page Styles */
+/**
+ * Events Page Styles
+ * 
+ * This CSS file contains all styles for the Events page component.
+ * It includes styling for both upcoming and past events sections,
+ * event cards, forms, and responsive design elements.
+ * 
+ * Color Scheme:
+ * - Primary: Purple gradient background (#8f3f84 to #1a1023)
+ * - Cards: Dark gradient with glassmorphism effect
+ * - Text: White with various opacity levels
+ */
+
+/* =============================================================================
+   MAIN LAYOUT
+   ============================================================================= */
+
+/* Main events page container */
 .events-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #8f3f84 0%, #1a1023 100%);
-  padding: 2rem 0;
-  color: white;
+  min-height: 100vh;                                    /* Full viewport height */
+  background: linear-gradient(135deg, #8f3f84 0%, #1a1023 100%); /* Purple gradient background */
+  padding: 2rem 0;                                      /* Vertical padding */
+  color: white;                                         /* White text color */
 }
 
+/* Events container with max width and centering */
 .events-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  max-width: 1200px;                                    /* Maximum container width */
+  margin: 0 auto;                                       /* Center the container */
+  padding: 0 2rem;                                      /* Horizontal padding */
 }
 
+/* Individual events section spacing */
 .events-section {
-  margin-bottom: 4rem;
+  margin-bottom: 4rem;                                  /* Bottom margin between sections */
 }
 
+/* Section titles with gradient text effect */
 .section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  text-align: center;
-  background: linear-gradient(135deg, #fff, #f0f0f0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 2.5rem;                                    /* Large font size */
+  font-weight: 700;                                     /* Bold font weight */
+  margin-bottom: 2rem;                                  /* Bottom margin */
+  text-align: center;                                   /* Center alignment */
+  background: linear-gradient(135deg, #fff, #f0f0f0);   /* White gradient background */
+  -webkit-background-clip: text;                        /* Clip background to text */
+  -webkit-text-fill-color: transparent;                 /* Make text transparent */
+  background-clip: text;                                /* Standard background clip */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);        /* Text shadow for depth */
 }
 
 /* Events Grid */
 .events-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   margin-top: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Event Card */
 .event-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, #2a1b3d 0%, #1a1023 100%);
+  border: 1px solid #5C5656;
+  border-radius: 15px;
   padding: 2rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  position: relative;
 }
 
 .event-card:hover {
@@ -59,14 +82,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
 }
 
 .event-title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
   color: white;
-  margin: 0;
   flex: 1;
 }
 
@@ -81,9 +105,11 @@
 }
 
 .event-description {
-  color: #e2e8f0;
+  font-size: 1.1rem;
   line-height: 1.6;
-  margin: 0;
+  color: white;
+  margin-bottom: 2rem;
+  text-align: justify;
   flex: 1;
 }
 

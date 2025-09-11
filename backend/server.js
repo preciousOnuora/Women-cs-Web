@@ -1,22 +1,51 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path'); 
+/**
+ * Women@CS Backend Server
+ * 
+ * This is the main server file for the Women@CS website backend.
+ * It handles API routes, database connections, and serves the React frontend.
+ * 
+ * Features:
+ * - MongoDB Atlas database connection
+ * - RESTful API endpoints for events, feedback, and contact
+ * - CORS enabled for frontend communication
+ * - Environment variable configuration
+ * - Error handling and logging
+ */
 
-// Load environment variables
+// Import required dependencies
+const express = require('express');        // Web framework for Node.js
+const mongoose = require('mongoose');      // MongoDB object modeling tool
+const cors = require('cors');              // Cross-Origin Resource Sharing middleware
+const dotenv = require('dotenv');          // Environment variable loader
+const path = require('path');              // File path utilities
+
+// Load environment variables from .env file in the backend directory
 dotenv.config({ path: path.join(__dirname, '.env') });
 
+// Initialize Express application
 const app = express();
 
-// Middleware
+// =============================================================================
+// MIDDLEWARE CONFIGURATION
+// =============================================================================
+
+// Enable CORS for all routes (allows frontend to communicate with backend)
 app.use(cors());
+
+// Parse JSON request bodies (for API endpoints)
 app.use(express.json());
+
+// Serve static files from the React build directory
 app.use(express.static(path.join(__dirname, 'build')));
 
-// MongoDB Atlas Connection
+// =============================================================================
+// DATABASE CONNECTION
+// =============================================================================
+
+// MongoDB connection string - uses environment variable or defaults to local
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/womenatcs';
 
+// Log environment configuration for debugging
 console.log('Environment check:');
 console.log('- NODE_ENV:', process.env.NODE_ENV);
 console.log('- VERCEL:', process.env.VERCEL);
@@ -24,13 +53,17 @@ console.log('- MONGODB_URI exists:', !!process.env.MONGODB_URI);
 console.log('- MONGODB_URI value:', process.env.MONGODB_URI ? 
   process.env.MONGODB_URI.replace(/\/\/.*@/, '//***:***@') : 'NOT SET');
 
-// Connect to MongoDB with retry logic
+/**
+ * Connect to MongoDB with automatic retry logic
+ * This function handles connection failures and retries every 5 seconds
+ * until a successful connection is established
+ */
 const connectWithRetry = () => {
   mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-    socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+    useNewUrlParser: true,           // Use new URL parser
+    useUnifiedTopology: true,        // Use new server discovery and monitoring engine
+    serverSelectionTimeoutMS: 5000,  // Keep trying to send operations for 5 seconds
+    socketTimeoutMS: 45000,          // Close sockets after 45 seconds of inactivity
   })
   .then(() => {
     console.log('✅ Connected to MongoDB Atlas');
@@ -40,13 +73,23 @@ const connectWithRetry = () => {
     console.error('❌ MongoDB connection error:', err.message);
     console.error('MongoDB URI being used:', MONGODB_URI.replace(/\/\/.*@/, '//***:***@'));
     console.log('Retrying connection in 5 seconds...');
+    // Retry connection after 5 seconds
     setTimeout(connectWithRetry, 5000);
   });
 };
 
+// Start the database connection process
 connectWithRetry();
 
-// Feedback Schema
+// =============================================================================
+// DATABASE SCHEMAS
+// =============================================================================
+
+/**
+ * Feedback Schema
+ * Defines the structure for feedback submissions from users
+ * Includes validation rules and data types for each field
+ */
 const feedbackSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -100,9 +143,14 @@ const feedbackSchema = new mongoose.Schema({
   }
 });
 
+// Create the Feedback model from the schema
 const Feedback = mongoose.model('Feedback', feedbackSchema);
 
-// Contact Schema
+/**
+ * Contact Schema
+ * Defines the structure for contact form submissions
+ * Used for general inquiries and messages from users
+ */
 const contactSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -131,9 +179,14 @@ const contactSchema = new mongoose.Schema({
   }
 });
 
+// Create the Contact model from the schema
 const Contact = mongoose.model('Contact', contactSchema);
 
-// Event Schema
+/**
+ * Event Schema
+ * Defines the structure for events in the Women@CS calendar
+ * Includes event details, capacity, and status tracking
+ */
 const eventSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -176,11 +229,19 @@ const eventSchema = new mongoose.Schema({
   }
 });
 
+// Create the Event model from the schema
 const Event = mongoose.model('Event', eventSchema);
 
-// API Routes
+// =============================================================================
+// API ROUTES
+// =============================================================================
 
-// Simple test endpoint (no database required)
+/**
+ * Test Endpoint
+ * Simple endpoint to verify server is running
+ * Returns server status and environment information
+ * GET /api/test
+ */
 app.get('/api/test', (req, res) => {
   res.json({
     success: true,
@@ -194,7 +255,12 @@ app.get('/api/test', (req, res) => {
   });
 });
 
-// Health check endpoint
+/**
+ * Health Check Endpoint
+ * Returns database connection status and server health information
+ * Used for monitoring and debugging
+ * GET /api/health
+ */
 app.get('/api/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState;
   const dbStatusText = {
@@ -219,7 +285,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Feedback form submission
+/**
+ * Submit Feedback
+ * Handles feedback form submissions from users
+ * Validates data and saves to database
+ * POST /api/feedback
+ */
 app.post('/api/feedback', async (req, res) => {
   try {
     const feedback = new Feedback(req.body);
@@ -240,7 +311,12 @@ app.post('/api/feedback', async (req, res) => {
   }
 });
 
-// Contact form submission
+/**
+ * Submit Contact Form
+ * Handles contact form submissions from users
+ * Validates data and saves to database
+ * POST /api/contact
+ */
 app.post('/api/contact', async (req, res) => {
   try {
     const contact = new Contact(req.body);
@@ -261,7 +337,12 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Get all feedback (for admin purposes)
+/**
+ * Get All Feedback (Admin)
+ * Retrieves all feedback submissions for administrative purposes
+ * Returns feedback sorted by submission date (newest first)
+ * GET /api/feedback
+ */
 app.get('/api/feedback', async (req, res) => {
   try {
     const feedback = await Feedback.find().sort({ submittedAt: -1 });
@@ -279,7 +360,12 @@ app.get('/api/feedback', async (req, res) => {
   }
 });
 
-// Get all contact messages (for admin purposes)
+/**
+ * Get All Contact Messages (Admin)
+ * Retrieves all contact form submissions for administrative purposes
+ * Returns messages sorted by submission date (newest first)
+ * GET /api/contact
+ */
 app.get('/api/contact', async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ submittedAt: -1 });
@@ -297,8 +383,17 @@ app.get('/api/contact', async (req, res) => {
   }
 });
 
-// Events API Routes
-// Get all events
+// =============================================================================
+// EVENTS API ROUTES
+// =============================================================================
+
+/**
+ * Get All Events
+ * Retrieves all active events from the database
+ * Includes connection waiting logic for Vercel serverless environment
+ * Returns events sorted by date (upcoming first)
+ * GET /api/events
+ */
 app.get('/api/events', async (req, res) => {
   try {
     // Wait for database connection with timeout

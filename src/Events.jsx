@@ -1,3 +1,16 @@
+/**
+ * Events Component
+ * 
+ * This component displays both upcoming and past events for the Women@CS website.
+ * It fetches event data from the backend API and provides registration functionality.
+ * 
+ * Features:
+ * - Displays upcoming events with registration capability
+ * - Shows past events with event history
+ * - Handles loading states and error messages
+ * - Responsive design with consistent styling
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from './contexts/AuthContext';
 import './Events.css';
@@ -5,18 +18,28 @@ import diageoLogo from './Images/diageoLogo.png';
 import athenaLogo from './Images/athena.png';
 
 const Events = () => {
+  // Authentication context for user login status
   const { isAuthenticated } = useAuth();
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [registering, setRegistering] = useState({});
+  
+  // State management for events data and UI
+  const [events, setEvents] = useState([]);           // Array of events from API
+  const [loading, setLoading] = useState(true);       // Loading state for API calls
+  const [error, setError] = useState('');             // Error messages
+  const [registering, setRegistering] = useState({}); // Registration status per event
 
+  // Fetch events when component mounts
   useEffect(() => {
     fetchEvents();
   }, []);
 
+  /**
+   * Fetch events from the backend API
+   * Uses different URLs for production vs development environments
+   * Handles errors and updates loading state
+   */
   const fetchEvents = async () => {
     try {
+      // Use relative URL for production, full URL for development
       const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:3001/api/events';
       const response = await fetch(apiUrl);
       const result = await response.json();
@@ -34,17 +57,30 @@ const Events = () => {
     }
   };
 
+  /**
+   * Handle event registration
+   * Checks authentication, sends registration request to API
+   * Updates UI state and refreshes events data
+   * @param {string} eventId - The ID of the event to register for
+   */
   const handleRegister = async (eventId) => {
+    // Check if user is authenticated
     if (!isAuthenticated) {
       alert('Please sign in to register for events');
       return;
     }
 
+    // Set loading state for this specific event
     setRegistering(prev => ({ ...prev, [eventId]: true }));
 
     try {
+      // Get authentication token from localStorage
       const token = localStorage.getItem('token');
+      
+      // Use appropriate API URL based on environment
       const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events/register' : 'http://localhost:3001/api/events/register';
+      
+      // Send registration request to API
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -67,10 +103,17 @@ const Events = () => {
       console.error('Error registering for event:', error);
       alert('Error registering for event. Please try again.');
     } finally {
+      // Clear loading state for this event
       setRegistering(prev => ({ ...prev, [eventId]: false }));
     }
   };
 
+  /**
+   * Format date string for display
+   * Converts ISO date string to readable format
+   * @param {string} dateString - ISO date string
+   * @returns {string} Formatted date string
+   */
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -81,12 +124,18 @@ const Events = () => {
     });
   };
 
+  /**
+   * Check if an event is upcoming (future date)
+   * @param {string} dateString - ISO date string
+   * @returns {boolean} True if event is in the future
+   */
   const isEventUpcoming = (dateString) => {
     const eventDate = new Date(dateString);
     const now = new Date();
     return eventDate > now;
   };
 
+  // Filter events into upcoming and past categories
   const upcomingEvents = events.filter(event => isEventUpcoming(event.date));
   // const pastEvents = events.filter(event => !isEventUpcoming(event.date));
 
@@ -120,16 +169,20 @@ const Events = () => {
                   
                   <div className="event-details">
                     <div className="event-detail">
-                      <span className="detail-label">📅 Date:</span>
+                      <span className="detail-label">Date:</span>
                       <span className="detail-value">{formatDate(event.date)}</span>
                     </div>
                     <div className="event-detail">
-                      <span className="detail-label">🕒 Time:</span>
+                      <span className="detail-label">Time:</span>
                       <span className="detail-value">{event.time}</span>
                     </div>
                     <div className="event-detail">
-                      <span className="detail-label">📍 Location:</span>
+                      <span className="detail-label">Location:</span>
                       <span className="detail-value">{event.location}</span>
+                    </div>
+                    <div className="event-detail">
+                      <span className="detail-label">Sponsor:</span>
+                      <span className="detail-value">To be announced</span>
                     </div>
                   </div>
                   

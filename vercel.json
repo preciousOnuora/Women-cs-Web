@@ -1,29 +1,35 @@
 {
+  "_comment": "Vercel Deployment Configuration for Women@CS Website",
   "version": 2,
   "builds": [
     {
+      "_comment": "Backend server build - Node.js runtime for API endpoints",
       "src": "backend/server.js",
       "use": "@vercel/node"
     },
     {
+      "_comment": "Frontend build - React static site generation",
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "build"  // React build output directory
       }
     }
   ],
   "rewrites": [
     {
+      "_comment": "API routes - redirect all /api/* requests to backend server",
       "source": "/api/(.*)",
       "destination": "/backend/server.js"
     },
     {
+      "_comment": "Frontend routes - redirect all other requests to React app",
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
   "env": {
+    "_comment": "Environment variables for production deployment",
     "NODE_ENV": "production"
   }
 }
