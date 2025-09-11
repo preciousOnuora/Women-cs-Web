@@ -1313,7 +1313,7 @@ main {
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
-    transform: translateY(-60px) !important;
+    transform: translateY(-80px) !important;
     margin: 0 !important;
   }
   
