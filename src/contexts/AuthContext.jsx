@@ -17,19 +17,24 @@ export const AuthProvider = ({ children }) => {
 
   // Check for existing token on app load
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser));
+    try {
+      const storedToken = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
+      
+      if (storedToken && storedUser) {
+        setToken(storedToken);
+        setUser(JSON.parse(storedUser));
+      }
+    } catch (error) {
+      console.error('Error loading stored auth data:', error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   const login = async (email, password) => {
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=login' : 'http://localhost:3001/api/auth?action=login';
+      const apiUrl = '/api/auth?action=login';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -58,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=register' : 'http://localhost:3001/api/auth?action=register';
+      const apiUrl = '/api/auth?action=register';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -88,7 +93,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       // Call logout API
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=logout' : 'http://localhost:3001/api/auth?action=logout';
+      const apiUrl = '/api/auth?action=logout';
       await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -109,7 +114,7 @@ export const AuthProvider = ({ children }) => {
 
   const forgotPassword = async (email) => {
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=forgot-password' : 'http://localhost:3001/api/auth?action=forgot-password';
+      const apiUrl = '/api/auth?action=forgot-password';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -128,7 +133,7 @@ export const AuthProvider = ({ children }) => {
 
   const resetPassword = async (token, password) => {
     try {
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/auth?action=reset-password' : 'http://localhost:3001/api/auth?action=reset-password';
+      const apiUrl = '/api/auth?action=reset-password';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
