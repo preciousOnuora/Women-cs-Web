@@ -772,6 +772,19 @@ main {
     min-width: 280px;
     width: 100%;
     max-width: 350px;
+    height: auto;
+    min-height: 130px;
+  }
+  
+  .feedback-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .help-btn {
+    padding: 0.7rem 1.3rem;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
   }
 
   .bottom-section {
@@ -1134,6 +1147,19 @@ main {
   .event-card, .feedback-card {
     min-width: 250px;
     padding: 1.5rem;
+    height: auto;
+    min-height: 120px;
+  }
+  
+  .feedback-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .help-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
   }
 
   .bottom-section {
