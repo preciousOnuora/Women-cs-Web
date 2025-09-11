@@ -1307,13 +1307,13 @@ main {
     margin: 0 !important;
   }
   
-  /* Move Heriot-Watt image up a lot but only increase size slightly */
+  /* Move Heriot-Watt image up much more and increase size significantly */
   .sponsor-card:nth-child(3) .sponsor-logo img {
-    height: 140px !important;
+    height: 180px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
-    transform: translateY(-40px) !important;
+    transform: translateY(-60px) !important;
     margin: 0 !important;
   }
   
@@ -1351,13 +1351,13 @@ main {
     margin: 0 !important;
   }
   
-  /* Move Heriot-Watt image up a lot on smaller screens too */
+  /* Move Heriot-Watt image up much more on smaller screens too */
   .sponsor-card:nth-child(3) .sponsor-logo img {
-    height: 120px !important;
+    height: 160px !important;
     width: 100% !important;
     max-width: 100% !important;
     object-fit: contain !important;
-    transform: translateY(-30px) !important;
+    transform: translateY(-50px) !important;
     margin: 0 !important;
   }
   
