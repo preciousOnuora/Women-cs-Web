@@ -138,20 +138,45 @@ const connectDB = async () => {
 
 // Email service for password reset emails
 const createTransporter = () => {
+  console.log('Creating email transporter...');
+  console.log('EMAIL_SERVICE:', process.env.EMAIL_SERVICE);
+  console.log('EMAIL_USER:', process.env.EMAIL_USER);
+  console.log('EMAIL_PASS exists:', !!process.env.EMAIL_PASS);
+  
   if (process.env.EMAIL_SERVICE === 'gmail') {
-    return nodemailer.createTransporter({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Gmail configuration incomplete. Missing EMAIL_USER or EMAIL_PASS');
+      return null;
+    }
+    
+    try {
+      const transporter = nodemailer.createTransporter({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        }
+      });
+      console.log('Gmail transporter created successfully');
+      return transporter;
+    } catch (error) {
+      console.error('Error creating Gmail transporter:', error);
+      return null;
+    }
   }
+  
+  console.log('No email service configured or unsupported service');
   return null;
 };
 
 const sendPasswordResetEmail = async (email, resetUrl) => {
   try {
+    console.log('Attempting to send password reset email to:', email);
+    console.log('Reset URL:', resetUrl);
+    console.log('Email service:', process.env.EMAIL_SERVICE);
+    console.log('Email user:', process.env.EMAIL_USER);
+    console.log('Email pass configured:', !!process.env.EMAIL_PASS);
+    
     const transporter = createTransporter();
     
     if (!transporter) {
@@ -187,10 +212,22 @@ const sendPasswordResetEmail = async (email, resetUrl) => {
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    console.log('Sending email with options:', {
+      from: mailOptions.from,
+      to: mailOptions.to,
+      subject: mailOptions.subject
+    });
+    
+    const result = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', result.messageId);
     return { success: true, message: 'Password reset email sent successfully' };
   } catch (error) {
     console.error('Error sending password reset email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      response: error.response
+    });
     return { success: false, message: 'Failed to send password reset email' };
   }
 };
