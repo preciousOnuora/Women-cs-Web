@@ -8,10 +8,13 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const userId = user?._id || user?.id;
+  
   const fetchUserEvents = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/events?userId=${user._id}`, {
+      console.log('Fetching events for user ID:', userId);
+      const response = await fetch(`/api/events?userId=${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -31,7 +34,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [user._id]);
+  }, [userId]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -51,7 +54,7 @@ const Dashboard = () => {
         body: JSON.stringify({ 
           action: 'unregister',
           eventId: eventId,
-          userId: user._id
+          userId: userId
         }),
       });
 

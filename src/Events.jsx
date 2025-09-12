@@ -71,7 +71,11 @@ const Events = () => {
     }
 
     // Check if user ID is available
-    if (!user._id) {
+    console.log('User object:', user);
+    console.log('User ID field:', user._id || user.id);
+    
+    const userId = user._id || user.id;
+    if (!userId) {
       console.error('User ID not available:', user);
       alert('User information not available. Please try signing in again.');
       return;
@@ -87,7 +91,7 @@ const Events = () => {
       // Use appropriate API URL based on environment
       const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:3001/api/events';
       
-      console.log('Registering for event:', eventId, 'with user:', user._id);
+      console.log('Registering for event:', eventId, 'with user:', userId);
       
       // Send registration request to API
       const response = await fetch(apiUrl, {
@@ -98,7 +102,7 @@ const Events = () => {
         },
         body: JSON.stringify({ 
           eventId,
-          userId: user._id 
+          userId: userId 
         }),
       });
 
