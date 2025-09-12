@@ -19,7 +19,7 @@ import athenaLogo from './Images/athena.png';
 
 const Events = () => {
   // Authentication context for user login status
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   
   // State management for events data and UI
   const [events, setEvents] = useState([]);           // Array of events from API
@@ -87,7 +87,10 @@ const Events = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ eventId }),
+        body: JSON.stringify({ 
+          eventId,
+          userId: user._id 
+        }),
       });
 
       const result = await response.json();

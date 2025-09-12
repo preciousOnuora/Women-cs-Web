@@ -76,11 +76,12 @@ module.exports = async function handler(req, res) {
         console.log('Fetching events for user:', userId);
         
         try {
-          // For now, return empty array since we don't have user event registration implemented yet
-          // This prevents the error and shows "no events" message instead
-          const events = [];
+          // Get events where the user is a participant
+          const events = await Event.find({ 
+            participants: userId 
+          }).sort({ date: 1 });
           
-          console.log('Returning empty events array for user:', userId);
+          console.log('Found events for user:', events.length);
           
           res.status(200).json({
             success: true,
@@ -151,7 +152,7 @@ module.exports = async function handler(req, res) {
       }
     } else if (req.method === 'POST') {
       // Handle event registration/unregistration
-      const { action, eventId } = body;
+      const { action, eventId, userId } = body;
       
       if (!eventId) {
         return res.status(400).json({
@@ -161,17 +162,82 @@ module.exports = async function handler(req, res) {
       }
 
       if (action === 'unregister') {
-        // For now, just return success (we'll implement full unregistration later)
-        res.status(200).json({
-          success: true,
-          message: 'Unregistration successful'
-        });
+        try {
+          // Remove user from event participants
+          const event = await Event.findById(eventId);
+          if (!event) {
+            return res.status(404).json({
+              success: false,
+              message: 'Event not found'
+            });
+          }
+
+          event.participants = event.participants.filter(pid => pid.toString() !== userId);
+          event.currentParticipants = event.participants.length;
+          await event.save();
+
+          res.status(200).json({
+            success: true,
+            message: 'Unregistration successful'
+          });
+        } catch (error) {
+          console.error('Error unregistering from event:', error);
+          res.status(500).json({
+            success: false,
+            message: 'Error unregistering from event'
+          });
+        }
       } else {
-        // For now, just return success (we'll implement full registration later)
-        res.status(200).json({
-          success: true,
-          message: 'Registration successful'
-        });
+        // Handle registration
+        try {
+          if (!userId) {
+            return res.status(400).json({
+              success: false,
+              message: 'User ID is required for registration'
+            });
+          }
+
+          // Find the event
+          const event = await Event.findById(eventId);
+          if (!event) {
+            return res.status(404).json({
+              success: false,
+              message: 'Event not found'
+            });
+          }
+
+          // Check if user is already registered
+          if (event.participants.includes(userId)) {
+            return res.status(400).json({
+              success: false,
+              message: 'You are already registered for this event'
+            });
+          }
+
+          // Check if event is full
+          if (event.currentParticipants >= event.maxParticipants) {
+            return res.status(400).json({
+              success: false,
+              message: 'This event is full'
+            });
+          }
+
+          // Add user to participants
+          event.participants.push(userId);
+          event.currentParticipants = event.participants.length;
+          await event.save();
+
+          res.status(200).json({
+            success: true,
+            message: 'Registration successful'
+          });
+        } catch (error) {
+          console.error('Error registering for event:', error);
+          res.status(500).json({
+            success: false,
+            message: 'Error registering for event'
+          });
+        }
       }
     } else {
       res.setHeader('Allow', ['GET', 'POST']);

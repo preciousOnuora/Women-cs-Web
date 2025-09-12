@@ -50,7 +50,8 @@ const Dashboard = () => {
         },
         body: JSON.stringify({ 
           action: 'unregister',
-          eventId: eventId 
+          eventId: eventId,
+          userId: user._id
         }),
       });
 
