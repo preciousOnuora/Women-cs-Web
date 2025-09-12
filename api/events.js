@@ -209,6 +209,32 @@ module.exports = async function handler(req, res) {
 
       if (action === 'unregister') {
         try {
+          // Get userId from body or try to extract from token
+          let actualUserId = userId;
+          
+          if (!actualUserId) {
+            // Try to get user ID from JWT token
+            const authHeader = req.headers.authorization;
+            if (authHeader && authHeader.startsWith('Bearer ')) {
+              try {
+                const jwt = require('jsonwebtoken');
+                const token = authHeader.substring(7);
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                actualUserId = decoded.userId;
+                console.log('Extracted userId from token for unregister:', actualUserId);
+              } catch (tokenError) {
+                console.error('Error decoding token for unregister:', tokenError);
+              }
+            }
+          }
+          
+          if (!actualUserId) {
+            return res.status(400).json({
+              success: false,
+              message: 'User ID is required for unregistration. Please sign in again.'
+            });
+          }
+
           // Remove user from event participants
           const event = await Event.findById(eventId);
           if (!event) {
@@ -218,9 +244,11 @@ module.exports = async function handler(req, res) {
             });
           }
 
-          event.participants = event.participants.filter(pid => pid.toString() !== userId);
+          event.participants = event.participants.filter(pid => pid.toString() !== actualUserId);
           event.currentParticipants = event.participants.length;
           await event.save();
+          
+          console.log('Successfully unregistered user', actualUserId, 'from event', eventId);
 
           res.status(200).json({
             success: true,
@@ -236,10 +264,29 @@ module.exports = async function handler(req, res) {
       } else {
         // Handle registration
         try {
-          if (!userId) {
+          // Get userId from body or try to extract from token
+          let actualUserId = userId;
+          
+          if (!actualUserId) {
+            // Try to get user ID from JWT token
+            const authHeader = req.headers.authorization;
+            if (authHeader && authHeader.startsWith('Bearer ')) {
+              try {
+                const jwt = require('jsonwebtoken');
+                const token = authHeader.substring(7);
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                actualUserId = decoded.userId;
+                console.log('Extracted userId from token:', actualUserId);
+              } catch (tokenError) {
+                console.error('Error decoding token:', tokenError);
+              }
+            }
+          }
+          
+          if (!actualUserId) {
             return res.status(400).json({
               success: false,
-              message: 'User ID is required for registration'
+              message: 'User ID is required for registration. Please sign in again.'
             });
           }
 
@@ -253,7 +300,7 @@ module.exports = async function handler(req, res) {
           }
 
           // Check if user is already registered
-          if (event.participants.includes(userId)) {
+          if (event.participants.includes(actualUserId)) {
             return res.status(400).json({
               success: false,
               message: 'You are already registered for this event'
@@ -269,9 +316,11 @@ module.exports = async function handler(req, res) {
           }
 
           // Add user to participants
-          event.participants.push(userId);
+          event.participants.push(actualUserId);
           event.currentParticipants = event.participants.length;
           await event.save();
+          
+          console.log('Successfully registered user', actualUserId, 'for event', eventId);
 
           res.status(200).json({
             success: true,

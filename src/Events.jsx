@@ -65,8 +65,15 @@ const Events = () => {
    */
   const handleRegister = async (eventId) => {
     // Check if user is authenticated
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !user) {
       alert('Please sign in to register for events');
+      return;
+    }
+
+    // Check if user ID is available
+    if (!user._id) {
+      console.error('User ID not available:', user);
+      alert('User information not available. Please try signing in again.');
       return;
     }
 
@@ -79,6 +86,8 @@ const Events = () => {
       
       // Use appropriate API URL based on environment
       const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:3001/api/events';
+      
+      console.log('Registering for event:', eventId, 'with user:', user._id);
       
       // Send registration request to API
       const response = await fetch(apiUrl, {
