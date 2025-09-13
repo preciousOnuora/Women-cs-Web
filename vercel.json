@@ -1,18 +1,4 @@
 {
-  "functions": {
-    "api/auth/index.js": {
-      "maxDuration": 30
-    },
-    "api/events.js": {
-      "maxDuration": 30
-    },
-    "api/other.js": {
-      "maxDuration": 30
-    },
-    "api/status.js": {
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
     {
       "source": "/((?!api).*)",
