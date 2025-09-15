@@ -154,7 +154,7 @@ module.exports = async function handler(req, res) {
                 _id: 'sample1',
                 title: "Bowling Night",
                 description: "Join us for a fun evening of bowling! A great opportunity to socialize, have fun, and connect with fellow Women@CS members. Whether you're a bowling pro or a complete beginner, everyone is welcome!",
-                date: new Date('2024-10-16T17:00:00Z'),
+                date: new Date('2025-10-16T17:00:00Z'),
                 time: "5:00 PM",
                 location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
                 maxParticipants: 30,
