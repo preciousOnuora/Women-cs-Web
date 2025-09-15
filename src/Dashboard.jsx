@@ -14,7 +14,8 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem('token');
       console.log('Fetching events for user ID:', userId);
-      const response = await fetch(`/api/events?userId=${userId}`, {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const response = await fetch(`${apiUrl}?userId=${userId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -45,7 +46,8 @@ const Dashboard = () => {
   const handleUnregisterEvent = async (eventId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/events`, {
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

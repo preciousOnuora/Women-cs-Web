@@ -40,7 +40,7 @@ const Events = () => {
   const fetchEvents = async () => {
     try {
       // Use relative URL for production, full URL for development
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:3001/api/events';
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
       const response = await fetch(apiUrl);
       const result = await response.json();
 
@@ -89,7 +89,7 @@ const Events = () => {
       const token = localStorage.getItem('token');
       
       // Use appropriate API URL based on environment
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:3001/api/events';
+      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
       
       console.log('Registering for event:', eventId, 'with user:', userId);
       
