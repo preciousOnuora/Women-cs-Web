@@ -7,7 +7,7 @@ export const EVENT_CONFIG = {
   targetDate: new Date(2026, 1, 7, 0, 0, 0), // February 7th, 2026 at midnight
   
   // Event details
-  eventName: "Upcoming Event!",
+  eventName: "Upcoming HackathonEvent!",
   
   // You can easily change the target date by modifying the line above
   // Examples:
