@@ -109,7 +109,17 @@ const Events = () => {
       const result = await response.json();
 
       if (result.success) {
-        alert('Successfully registered for the event!');
+        alert(result.message);
+        
+        // If this is a sample event, store the registration in localStorage
+        if (result.isSampleEvent) {
+          const registeredEvents = JSON.parse(localStorage.getItem('registeredSampleEvents') || '[]');
+          if (!registeredEvents.includes(eventId)) {
+            registeredEvents.push(eventId);
+            localStorage.setItem('registeredSampleEvents', JSON.stringify(registeredEvents));
+          }
+        }
+        
         // Refresh events to update participant count
         fetchEvents();
       } else {

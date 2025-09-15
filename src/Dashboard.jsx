@@ -23,15 +23,56 @@ const Dashboard = () => {
       });
 
       const result = await response.json();
+      let events = [];
 
       if (result.success) {
-        setUserEvents(result.data);
+        events = result.data;
       } else {
-        setError(result.message);
+        console.log('API returned error, checking localStorage for sample events');
       }
+
+      // Check localStorage for sample event registrations
+      const registeredSampleEvents = JSON.parse(localStorage.getItem('registeredSampleEvents') || '[]');
+      console.log('Registered sample events:', registeredSampleEvents);
+
+      // Add sample events that user has registered for
+      if (registeredSampleEvents.includes('sample1')) {
+        events.push({
+          _id: 'sample1',
+          title: "Bowling Night",
+          description: "Join us for a fun evening of bowling! A great opportunity to socialize, have fun, and connect with fellow Women@CS members. Whether you're a bowling pro or a complete beginner, everyone is welcome!",
+          date: new Date('2025-10-16T17:00:00Z'),
+          time: "5:00 PM",
+          location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
+          maxParticipants: 30,
+          currentParticipants: 1,
+          isUpcoming: true
+        });
+      }
+
+      setUserEvents(events);
     } catch (error) {
       console.error('Error fetching user events:', error);
-      setError('Error loading your events');
+      
+      // Even if API fails, check localStorage for sample events
+      const registeredSampleEvents = JSON.parse(localStorage.getItem('registeredSampleEvents') || '[]');
+      let events = [];
+
+      if (registeredSampleEvents.includes('sample1')) {
+        events.push({
+          _id: 'sample1',
+          title: "Bowling Night",
+          description: "Join us for a fun evening of bowling! A great opportunity to socialize, have fun, and connect with fellow Women@CS members. Whether you're a bowling pro or a complete beginner, everyone is welcome!",
+          date: new Date('2025-10-16T17:00:00Z'),
+          time: "5:00 PM",
+          location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
+          maxParticipants: 30,
+          currentParticipants: 1,
+          isUpcoming: true
+        });
+      }
+
+      setUserEvents(events);
     } finally {
       setLoading(false);
     }
@@ -45,6 +86,17 @@ const Dashboard = () => {
 
   const handleUnregisterEvent = async (eventId) => {
     try {
+      // Handle sample events
+      if (eventId === 'sample1') {
+        const registeredSampleEvents = JSON.parse(localStorage.getItem('registeredSampleEvents') || '[]');
+        const updatedEvents = registeredSampleEvents.filter(id => id !== eventId);
+        localStorage.setItem('registeredSampleEvents', JSON.stringify(updatedEvents));
+        
+        // Remove the event from the list
+        setUserEvents(prev => prev.filter(event => event._id !== eventId));
+        return;
+      }
+
       const token = localStorage.getItem('token');
       const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
       const response = await fetch(apiUrl, {
