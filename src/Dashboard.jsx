@@ -225,15 +225,19 @@ const Dashboard = () => {
               <h3>Quick Actions</h3>
               <div className="actions-grid">
                 <a href="/events" className="action-btn">
+                  <span className="action-icon"></span>
                   Browse Events
                 </a>
                 <a href="/feedback" className="action-btn">
+                  <span className="action-icon"></span>
                   Give Feedback
                 </a>
                 <a href="/contact" className="action-btn">
+                  <span className="action-icon"></span>
                   Contact Us
                 </a>
                 <a href="/gallery" className="action-btn">
+                  <span className="action-icon"></span>
                   View Gallery
                 </a>
               </div>
