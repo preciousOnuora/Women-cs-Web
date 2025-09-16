@@ -41,8 +41,12 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  console.log('Admin API called:', req.method, req.url);
-  console.log('Request body:', req.body);
+  console.log('=== ADMIN API CALLED ===');
+  console.log('Method:', req.method);
+  console.log('URL:', req.url);
+  console.log('Headers:', req.headers);
+  console.log('Body:', req.body);
+  console.log('========================');
 
   // Parse JSON body if it exists
   let body = {};

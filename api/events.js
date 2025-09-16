@@ -455,7 +455,12 @@ module.exports = async function handler(req, res) {
       }
     } else if (req.method === 'POST' && req.url.includes('/admin')) {
       // Admin route to create new events
-      console.log('Admin route hit:', req.url, req.method);
+      console.log('=== ADMIN ROUTE HIT ===');
+      console.log('URL:', req.url);
+      console.log('Method:', req.method);
+      console.log('Body:', req.body);
+      console.log('======================');
+      
       try {
         const { title, description, date, time, location, maxParticipants, sponsor, currentParticipants = 0, isUpcoming = true } = req.body;
 
@@ -466,8 +471,7 @@ module.exports = async function handler(req, res) {
           });
         }
 
-        // For Vercel, we'll add the event to our sample events
-        // In a real app, you'd save to database
+        // For Vercel, we'll add the event to our global admin events
         const newEvent = {
           _id: `admin_${Date.now()}`,
           title,
@@ -482,9 +486,16 @@ module.exports = async function handler(req, res) {
           participants: []
         };
 
+        // Store in global admin events array
+        global.adminEvents = global.adminEvents || [];
+        global.adminEvents.push(newEvent);
+
+        console.log('Created event:', newEvent);
+        console.log('Total admin events:', global.adminEvents.length);
+
         res.status(201).json({
           success: true,
-          message: 'Event created successfully (Note: This is a demo - event added to sample data)',
+          message: 'Event created successfully!',
           data: newEvent
         });
 
@@ -498,7 +509,12 @@ module.exports = async function handler(req, res) {
       }
     } else if (req.method === 'DELETE' && req.url.includes('/delete')) {
       // Delete event route
-      console.log('Delete route hit:', req.url, req.method);
+      console.log('=== DELETE ROUTE HIT ===');
+      console.log('URL:', req.url);
+      console.log('Method:', req.method);
+      console.log('Body:', req.body);
+      console.log('========================');
+      
       try {
         const { eventId } = req.body;
 
