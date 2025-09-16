@@ -35,6 +35,25 @@ global.adminEvents = global.adminEvents || [];
 // Global storage for sample event registrations (in-memory for Vercel)
 global.sampleEventRegistrations = global.sampleEventRegistrations || {};
 
+// Initialize admin events with some default events if empty
+if (global.adminEvents.length === 0) {
+  global.adminEvents = [
+    {
+      _id: 'bowling_real',
+      title: "Bowling Night",
+      description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
+      date: new Date('2025-10-16T17:00:00Z'),
+      time: "5:00 PM",
+      location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
+      maxParticipants: 30,
+      currentParticipants: 0,
+      isUpcoming: true,
+      sponsor: "To be announced",
+      participants: []
+    }
+  ];
+}
+
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -181,7 +200,7 @@ module.exports = async function handler(req, res) {
               participants: []
             });
           }
-
+          
           // If no events in database, return sample events
           if (events.length === 0) {
             console.log('No events in database, returning sample events');
@@ -235,6 +254,10 @@ module.exports = async function handler(req, res) {
           
           // Add admin-created events to the response
           const allEvents = [...events, ...global.adminEvents];
+          
+          console.log('GET /api/events - Database events:', events.length);
+          console.log('GET /api/events - Admin events:', global.adminEvents?.length || 0);
+          console.log('GET /api/events - Total events:', allEvents.length);
           
           // Update Bowling event participant count if it exists in admin events
           const bowlingEvent = global.adminEvents?.find(event => event._id === 'bowling_real');
@@ -317,6 +340,10 @@ module.exports = async function handler(req, res) {
           
           // Add admin-created events to the response
           const allEvents = [...events, ...global.adminEvents];
+          
+          console.log('GET /api/events - Database events:', events.length);
+          console.log('GET /api/events - Admin events:', global.adminEvents?.length || 0);
+          console.log('GET /api/events - Total events:', allEvents.length);
           
           // Update Bowling event participant count if it exists in admin events
           const bowlingEvent = global.adminEvents?.find(event => event._id === 'bowling_real');
@@ -487,13 +514,13 @@ module.exports = async function handler(req, res) {
 
           // Try to find the event in database
           try {
-            const event = await Event.findById(eventId);
-            if (!event) {
-              return res.status(404).json({
-                success: false,
-                message: 'Event not found'
-              });
-            }
+          const event = await Event.findById(eventId);
+          if (!event) {
+            return res.status(404).json({
+              success: false,
+              message: 'Event not found'
+            });
+          }
 
           // Check if user is already registered
           if (event.participants.includes(actualUserId)) {
@@ -544,6 +571,7 @@ module.exports = async function handler(req, res) {
       console.log('URL:', req.url);
       console.log('Method:', req.method);
       console.log('Body:', req.body);
+      console.log('Current global.adminEvents length:', global.adminEvents?.length || 0);
       console.log('======================');
       
       try {
@@ -598,6 +626,7 @@ module.exports = async function handler(req, res) {
       console.log('URL:', req.url);
       console.log('Method:', req.method);
       console.log('Body:', req.body);
+      console.log('Current global.adminEvents length:', global.adminEvents?.length || 0);
       console.log('========================');
       
       try {
