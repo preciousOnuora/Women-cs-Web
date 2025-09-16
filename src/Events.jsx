@@ -192,7 +192,7 @@ const Events = () => {
                       </div>
                     </div>
 
-                    <p className="event-description">{event.description} <br/> </p>
+                    <p className="event-description" dangerouslySetInnerHTML={{ __html: event.description }}></p>
 
                     <div className="event-details">
                       <div className="location">
