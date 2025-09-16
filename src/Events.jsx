@@ -192,7 +192,7 @@ const Events = () => {
                       </div>
                     </div>
 
-                    <p className="event-description">{event.description}</p>
+                    <p className="event-description">{event.description} <br/> </p>
 
                     <div className="event-details">
                       <div className="location">
