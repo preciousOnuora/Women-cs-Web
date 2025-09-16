@@ -226,6 +226,17 @@ module.exports = async function handler(req, res) {
                 maxParticipants: 80,
                 currentParticipants: 0,
                 isUpcoming: true
+              },
+              {
+                _id: 'sample_hackathon_2026',
+                title: "24HR HACKATHON 2026",
+                description: "Work in <span class=\"highlight\">Teams of 5</span> to collaborate, code, and innovate! This event features <span class=\"highlight\">inspiring talks on career journeys</span>, networking opportunities with <span class=\"highlight\">industry professionals</span>, and the chance to win <span class=\"highlight\">prizes</span>. Fuel your creativity with <span class=\"highlight\">free pizza</span> and showcase your skills in this unmissable coding adventure!",
+                date: new Date('2026-02-07T10:30:00Z'),
+                time: "10:30 AM",
+                location: "Heriot-Watt Campus, Robotarium",
+                maxParticipants: 100,
+                currentParticipants: 2,
+                isUpcoming: true
               }
             ];
           }
@@ -285,6 +296,17 @@ module.exports = async function handler(req, res) {
               location: "Edinburgh University, Appleton Tower",
               maxParticipants: 80,
               currentParticipants: 0,
+              isUpcoming: true
+            },
+            {
+              _id: 'sample_hackathon_2026',
+              title: "24HR HACKATHON 2026",
+              description: "Work in <span class=\"highlight\">Teams of 5</span> to collaborate, code, and innovate! This event features <span class=\"highlight\">inspiring talks on career journeys</span>, networking opportunities with <span class=\"highlight\">industry professionals</span>, and the chance to win <span class=\"highlight\">prizes</span>. Fuel your creativity with <span class=\"highlight\">free pizza</span> and showcase your skills in this unmissable coding adventure!",
+              date: new Date('2026-02-07T10:30:00Z'),
+              time: "10:30 AM",
+              location: "Heriot-Watt Campus, Robotarium",
+              maxParticipants: 100,
+              currentParticipants: 2,
               isUpcoming: true
             }
           ];
