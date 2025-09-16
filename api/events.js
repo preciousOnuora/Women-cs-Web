@@ -32,6 +32,9 @@ const Event = mongoose.model('Event', eventSchema);
 // Global storage for admin-created events (in-memory for Vercel)
 global.adminEvents = global.adminEvents || [];
 
+// Global storage for sample event registrations (in-memory for Vercel)
+global.sampleEventRegistrations = global.sampleEventRegistrations || {};
+
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -159,12 +162,13 @@ module.exports = async function handler(req, res) {
         try {
           let events = await Event.find().sort({ date: 1 });
           
-          // Always include the Bowling event - check if it exists, if not add it
+          
+          // Always add the Bowling event as a real event (not sample)
           const bowlingEventExists = events.some(event => event.title === "Bowling Night");
           if (!bowlingEventExists) {
-            console.log('Bowling event not found in database, adding it to response');
+            console.log('Adding Bowling event as real event');
             events.unshift({
-              _id: 'sample1',
+              _id: 'bowling_real',
               title: "Bowling Night",
               description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
               date: new Date('2025-10-16T17:00:00Z'),
@@ -172,25 +176,16 @@ module.exports = async function handler(req, res) {
               location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
               maxParticipants: 30,
               currentParticipants: 0,
-              isUpcoming: true
+              isUpcoming: true,
+              sponsor: "To be announced",
+              participants: []
             });
           }
-          
+
           // If no events in database, return sample events
           if (events.length === 0) {
             console.log('No events in database, returning sample events');
             events = [
-              {
-                _id: 'sample1',
-                title: "Bowling Night",
-                description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
-                date: new Date('2025-10-16T17:00:00Z'),
-                time: "5:00 PM",
-                location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
-                maxParticipants: 30,
-                currentParticipants: 0,
-                isUpcoming: true
-              },
               {
                 _id: 'sample2',
                 title: "Women in Tech Networking Event",
@@ -241,6 +236,16 @@ module.exports = async function handler(req, res) {
           // Add admin-created events to the response
           const allEvents = [...events, ...global.adminEvents];
           
+          // Update Bowling event participant count if it exists in admin events
+          const bowlingEvent = global.adminEvents?.find(event => event._id === 'bowling_real');
+          if (bowlingEvent) {
+            const allEventsBowling = allEvents.find(event => event._id === 'bowling_real');
+            if (allEventsBowling) {
+              allEventsBowling.currentParticipants = bowlingEvent.currentParticipants;
+              allEventsBowling.participants = bowlingEvent.participants;
+            }
+          }
+          
           res.status(200).json({
             success: true,
             data: allEvents
@@ -252,7 +257,7 @@ module.exports = async function handler(req, res) {
           // Return sample events when database connection fails
           const events = [
             {
-              _id: 'sample1',
+              _id: 'bowling_real',
               title: "Bowling Night",
               description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
               date: new Date('2025-10-16T17:00:00Z'),
@@ -260,7 +265,9 @@ module.exports = async function handler(req, res) {
               location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
               maxParticipants: 30,
               currentParticipants: 0,
-              isUpcoming: true
+              isUpcoming: true,
+              sponsor: "To be announced",
+              participants: []
             },
             {
               _id: 'sample2',
@@ -310,6 +317,16 @@ module.exports = async function handler(req, res) {
           
           // Add admin-created events to the response
           const allEvents = [...events, ...global.adminEvents];
+          
+          // Update Bowling event participant count if it exists in admin events
+          const bowlingEvent = global.adminEvents?.find(event => event._id === 'bowling_real');
+          if (bowlingEvent) {
+            const allEventsBowling = allEvents.find(event => event._id === 'bowling_real');
+            if (allEventsBowling) {
+              allEventsBowling.currentParticipants = bowlingEvent.currentParticipants;
+              allEventsBowling.participants = bowlingEvent.participants;
+            }
+          }
           
           res.status(200).json({
             success: true,
@@ -411,14 +428,60 @@ module.exports = async function handler(req, res) {
             });
           }
 
-          // Check if this is a sample event (Bowling Night)
-          if (eventId === 'sample1') {
-            console.log('Registration for sample Bowling event - returning success');
+
+          // Check if this is the Bowling event (real event, not in database)
+          if (eventId === 'bowling_real') {
+            console.log('Registration for Bowling event - handling as real event');
+            
+            // Initialize global admin events if not exists
+            global.adminEvents = global.adminEvents || [];
+            
+            // Find the Bowling event in admin events
+            let bowlingEvent = global.adminEvents.find(event => event._id === 'bowling_real');
+            
+            if (!bowlingEvent) {
+              // Create the Bowling event if it doesn't exist
+              bowlingEvent = {
+                _id: 'bowling_real',
+                title: "Bowling Night",
+                description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
+                date: new Date('2025-10-16T17:00:00Z'),
+                time: "5:00 PM",
+                location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
+                maxParticipants: 30,
+                currentParticipants: 0,
+                isUpcoming: true,
+                sponsor: "To be announced",
+                participants: []
+              };
+              global.adminEvents.push(bowlingEvent);
+            }
+            
+            // Check if user is already registered
+            if (bowlingEvent.participants.includes(userId)) {
+              return res.status(400).json({
+                success: false,
+                message: 'You are already registered for this event'
+              });
+            }
+            
+            // Check if event is full
+            if (bowlingEvent.currentParticipants >= bowlingEvent.maxParticipants) {
+              return res.status(400).json({
+                success: false,
+                message: 'This event is full'
+              });
+            }
+            
+            // Add user to participants and increment count
+            bowlingEvent.participants.push(userId);
+            bowlingEvent.currentParticipants++;
+            
+            console.log(`User ${userId} registered for Bowling event. Total participants: ${bowlingEvent.currentParticipants}`);
+            
             return res.status(200).json({
               success: true,
-              message: 'Registration successful! You are now registered for the Bowling Night event.',
-              eventId: 'sample1',
-              isSampleEvent: true
+              message: 'Registration successful! You are now registered for the Bowling Night event.'
             });
           }
 
@@ -432,33 +495,33 @@ module.exports = async function handler(req, res) {
               });
             }
 
-            // Check if user is already registered
-            if (event.participants.includes(actualUserId)) {
-              return res.status(400).json({
-                success: false,
-                message: 'You are already registered for this event'
-              });
-            }
-
-            // Check if event is full
-            if (event.currentParticipants >= event.maxParticipants) {
-              return res.status(400).json({
-                success: false,
-                message: 'This event is full'
-              });
-            }
-
-            // Add user to participants
-            event.participants.push(actualUserId);
-            event.currentParticipants = event.participants.length;
-            await event.save();
-            
-            console.log('Successfully registered user', actualUserId, 'for event', eventId);
-
-            res.status(200).json({
-              success: true,
-              message: 'Registration successful'
+          // Check if user is already registered
+          if (event.participants.includes(actualUserId)) {
+            return res.status(400).json({
+              success: false,
+              message: 'You are already registered for this event'
             });
+          }
+
+          // Check if event is full
+          if (event.currentParticipants >= event.maxParticipants) {
+            return res.status(400).json({
+              success: false,
+              message: 'This event is full'
+            });
+          }
+
+          // Add user to participants
+          event.participants.push(actualUserId);
+          event.currentParticipants = event.participants.length;
+          await event.save();
+          
+          console.log('Successfully registered user', actualUserId, 'for event', eventId);
+
+          res.status(200).json({
+            success: true,
+            message: 'Registration successful'
+          });
           } catch (dbError) {
             console.error('Database error during registration:', dbError);
             // For sample events or database errors, return success
