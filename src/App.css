@@ -225,7 +225,26 @@ main {
   flex-wrap: wrap;
 }
 
-/* Removed global event-card styles to prevent conflicts with Events.css */
+/* Home page event card styles - specific to home page only */
+.hero-section .event-card {
+  background: rgba(147, 51, 234, 0.8);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hero-section .event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hero-section .event-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
 
 .countdown {
   display: flex;
@@ -240,11 +259,55 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: transparent;
+  background: transparent !important;
   padding: 1rem;
   border-radius: 10px;
   min-width: 80px;
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Ensure countdown timer has no background even inside event cards */
+.event-card .countdown-item,
+.hero-section .event-card .countdown-item,
+.countdown .countdown-item {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Force override any white backgrounds on countdown */
+.countdown-item * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Force override for events page to ensure proper styling */
+.events-page {
+  background: linear-gradient(135deg, #8f3f84 0%, #1a1023 100%) !important;
+}
+
+.events-page .event-card {
+  background: linear-gradient(135deg, #2a1b3d 0%, #1a1023 100%) !important;
+  border: 1px solid #5C5656 !important;
+  border-radius: 15px !important;
+  padding: 2rem !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+  position: relative !important;
+}
+
+.events-page .events-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2rem !important;
+  margin-top: 2rem !important;
+  max-width: 800px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+  align-items: center !important;
 }
 
 .countdown-number {
@@ -789,6 +852,14 @@ form .form-group input::placeholder, form .form-group textarea::placeholder {
     margin: 2rem 0;
   }
 
+  .hero-section .event-card {
+    min-width: 280px;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    min-height: 130px;
+  }
+
   .feedback-card {
     min-width: 280px;
     width: 100%;
@@ -1163,6 +1234,13 @@ form .form-group input::placeholder, form .form-group textarea::placeholder {
   .content-cards {
     gap: 1rem;
     margin: 1.5rem 0;
+  }
+
+  .hero-section .event-card {
+    min-width: 250px;
+    padding: 1.5rem;
+    height: auto;
+    min-height: 120px;
   }
 
   .feedback-card {
