@@ -41,9 +41,20 @@ module.exports = async function handler(req, res) {
         });
       }
 
-      // For Vercel, we'll simulate deletion by returning success
+      // For Vercel, we'll remove from global admin events
       // In a real app, you'd delete from database
       console.log('Deleting event with ID:', eventId);
+
+      // Initialize global admin events if it doesn't exist
+      global.adminEvents = global.adminEvents || [];
+      
+      // Find and remove the event
+      const initialLength = global.adminEvents.length;
+      global.adminEvents = global.adminEvents.filter(event => event._id !== eventId);
+      const removedCount = initialLength - global.adminEvents.length;
+      
+      console.log(`Removed ${removedCount} event(s) with ID: ${eventId}`);
+      console.log('Remaining admin events:', global.adminEvents.length);
 
       res.status(200).json({
         success: true,
