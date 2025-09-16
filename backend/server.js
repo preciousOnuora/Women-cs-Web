@@ -1007,6 +1007,49 @@ app.delete('/api/events/:id', async (req, res) => {
   }
 });
 
+// Admin route to create new events
+app.post('/api/events/admin', async (req, res) => {
+  try {
+    const { title, description, date, time, location, maxParticipants, sponsor, currentParticipants = 0, isUpcoming = true } = req.body;
+
+    if (!title || !description || !date || !time || !location || !maxParticipants) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide all required fields'
+      });
+    }
+
+    // Create new event
+    const newEvent = new Event({
+      title,
+      description,
+      date: new Date(date),
+      time,
+      location,
+      maxParticipants: parseInt(maxParticipants),
+      currentParticipants: parseInt(currentParticipants),
+      isActive: isUpcoming,
+      sponsor: sponsor || 'To be announced'
+    });
+
+    await newEvent.save();
+
+    res.status(201).json({
+      success: true,
+      message: 'Event created successfully',
+      data: newEvent
+    });
+
+  } catch (error) {
+    console.error('Error creating event:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating event. Please try again.',
+      error: error.message
+    });
+  }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Server error:', error);

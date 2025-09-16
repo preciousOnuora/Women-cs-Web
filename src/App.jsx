@@ -20,6 +20,7 @@ import Sponsors from './Sponsors.jsx';
 import Feedback from './Feedback.jsx';
 import Gallery from './Gallery.jsx';
 import Dashboard from './Dashboard.jsx';
+import Admin from './Admin.jsx';
 import ResetPassword from './ResetPassword.jsx';
 import Footer from './Footer.jsx';
 import { AuthProvider } from './contexts/AuthContext';
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="/reset-password" element={<ResetPassword />} />
             </Routes>
           </main>

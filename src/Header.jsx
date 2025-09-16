@@ -52,6 +52,9 @@ const Header = () => {
             {isAuthenticated && (
               <Link to="/dashboard" className="nav-link">Dashboard</Link>
             )}
+            {isAuthenticated && (user?.email === 'onuoraprecious@gmail.com' || user?._id === 'admin-user-id') && (
+              <Link to="/admin" className="nav-link admin-link">Admin</Link>
+            )}
           </nav>
           
           {isAuthenticated ? (
