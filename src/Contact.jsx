@@ -61,17 +61,17 @@ const Contact = () => {
             
             <div className="contact-methods">
               <div className="contact-method">
-                <h3>📧 Email</h3>
+                <h3> Email</h3>
                 <p>womenincs.hw@gmail.com</p>
               </div>
               
               <div className="contact-method">
-                <h3>📱 Social Media</h3>
+                <h3> Social Media</h3>
                 <p>Follow us on Instagram</p>
               </div>
               
               <div className="contact-method">
-                <h3>📍 Location</h3>
+                <h3> Location</h3>
                 <p>Heriot-Watt University, Edinburgh Campus</p>
               </div>
             </div>

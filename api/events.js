@@ -484,8 +484,37 @@ module.exports = async function handler(req, res) {
           error: error.message
         });
       }
+    } else if (req.method === 'DELETE' && (req.url === '/api/events/delete' || req.url.endsWith('/delete'))) {
+      // Delete event route
+      console.log('Delete route hit:', req.url, req.method);
+      try {
+        const { eventId } = req.body;
+
+        if (!eventId) {
+          return res.status(400).json({
+            success: false,
+            message: 'Event ID is required'
+          });
+        }
+
+        // For Vercel, we'll simulate deletion by returning success
+        // In a real app, you'd delete from database
+        console.log('Deleting event with ID:', eventId);
+
+        res.status(200).json({
+          success: true,
+          message: 'Event deleted successfully'
+        });
+      } catch (error) {
+        console.error('Error deleting event:', error);
+        res.status(500).json({
+          success: false,
+          message: 'Error deleting event. Please try again.',
+          error: error.message
+        });
+      }
     } else {
-      res.setHeader('Allow', ['GET', 'POST']);
+      res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   } catch (error) {

@@ -15,9 +15,33 @@ const Admin = () => {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [events, setEvents] = useState([]);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState(null);
 
   // Check if user is admin (you can modify this to check for specific user ID or email)
   const isAdmin = user && (user.email === 'onuoraprecious@gmail.com' || user._id === '68c2d1c906745ea4203f5272');
+
+  // Fetch events on component mount
+  React.useEffect(() => {
+    if (isAdmin) {
+      fetchEvents();
+    }
+  }, [isAdmin]);
+
+  const fetchEvents = async () => {
+    try {
+      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const response = await fetch(baseUrl);
+      const result = await response.json();
+      
+      if (result.success) {
+        setEvents(result.data);
+      }
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,6 +88,8 @@ const Admin = () => {
           maxParticipants: '',
           sponsor: ''
         });
+        // Refresh events list
+        fetchEvents();
       } else {
         setMessage(`Error: ${result.message}`);
       }
@@ -73,6 +99,55 @@ const Admin = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDeleteClick = (event) => {
+    setEventToDelete(event);
+    setShowDeleteConfirm(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!eventToDelete) return;
+
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const deleteUrl = baseUrl.replace('/api/events', '/api/events/delete');
+      
+      const response = await fetch(deleteUrl, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventId: eventToDelete._id
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setMessage('Event deleted successfully!');
+        // Refresh events list
+        fetchEvents();
+      } else {
+        setMessage(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      setMessage('Error deleting event. Please try again.');
+    } finally {
+      setLoading(false);
+      setShowDeleteConfirm(false);
+      setEventToDelete(null);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setShowDeleteConfirm(false);
+    setEventToDelete(null);
   };
 
   if (!isAuthenticated) {
@@ -210,6 +285,60 @@ const Admin = () => {
             {loading ? 'Creating Event...' : 'Create Event'}
           </button>
         </form>
+
+        {/* Events List */}
+        <div className="events-list">
+          <h2>Manage Events</h2>
+          {events.length === 0 ? (
+            <p>No events found.</p>
+          ) : (
+            <div className="events-grid">
+              {events.map((event) => (
+                <div key={event._id} className="event-card">
+                  <h3>{event.title}</h3>
+                  <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+                  <p><strong>Time:</strong> {event.time}</p>
+                  <p><strong>Location:</strong> {event.location}</p>
+                  <p><strong>Participants:</strong> {event.currentParticipants || 0}/{event.maxParticipants}</p>
+                  <button 
+                    onClick={() => handleDeleteClick(event)}
+                    className="delete-btn"
+                    disabled={loading}
+                  >
+                    Delete Event
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteConfirm && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3>Confirm Delete</h3>
+              <p>Are you sure you want to delete the event "{eventToDelete?.title}"?</p>
+              <p>This action cannot be undone.</p>
+              <div className="modal-buttons">
+                <button 
+                  onClick={handleDeleteCancel}
+                  className="cancel-btn"
+                  disabled={loading}
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleDeleteConfirm}
+                  className="confirm-delete-btn"
+                  disabled={loading}
+                >
+                  {loading ? 'Deleting...' : 'Delete Event'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
