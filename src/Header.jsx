@@ -55,12 +55,6 @@ const Header = () => {
             {isAuthenticated && (user?.email === 'onuoraprecious@gmail.com' || user?._id === '68c2d1c906745ea4203f5272') && (
               <Link to="/admin" className="nav-link admin-link">Admin</Link>
             )}
-            {/* Debug info - remove this later */}
-            {isAuthenticated && (
-              <div style={{fontSize: '10px', color: 'red', marginLeft: '10px'}}>
-                Debug: {user?.email} | {user?._id}
-              </div>
-            )}
           </nav>
           
           {isAuthenticated ? (
