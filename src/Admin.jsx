@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from './contexts/AuthContext';
+import React, { useState } from 'react';
+import { useAuth } from './contexts/AuthContext';
 import './Admin.css';
 
 const Admin = () => {
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const { user, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
