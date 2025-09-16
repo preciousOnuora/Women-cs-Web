@@ -1,5 +1,5 @@
 {
-  "name": "womenatcs-backend",
+  "name": "Women@CS-Backend",
   "version": "1.0.0",
   "description": "Backend for Women@CS website with MongoDB Atlas integration",
   "main": "server.js",
