@@ -34,9 +34,10 @@ const Admin = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const apiUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const adminUrl = baseUrl.replace('/api/events', '/api/events/admin');
       
-      const response = await fetch(`${apiUrl}/admin`, {
+      const response = await fetch(adminUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

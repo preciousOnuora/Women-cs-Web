@@ -441,8 +441,9 @@ module.exports = async function handler(req, res) {
           });
         }
       }
-    } else if (req.method === 'POST' && req.url === '/api/events/admin') {
+    } else if (req.method === 'POST' && (req.url === '/api/events/admin' || req.url.endsWith('/admin'))) {
       // Admin route to create new events
+      console.log('Admin route hit:', req.url, req.method);
       try {
         const { title, description, date, time, location, maxParticipants, sponsor, currentParticipants = 0, isUpcoming = true } = req.body;
 
