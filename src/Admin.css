@@ -64,7 +64,8 @@
   border: 2px solid #e1e5e9;
   border-radius: 8px;
   font-size: 1rem;
-  color: #333;
+  color: #000 !important; /* Force black text */
+  background-color: #fff !important; /* Force white background */
   transition: border-color 0.3s ease;
 }
 
@@ -77,7 +78,7 @@
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #999;
+  color: #666 !important; /* Force dark gray for placeholder */
   opacity: 1;
 }
 
