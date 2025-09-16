@@ -17,7 +17,7 @@ const Admin = () => {
   const [message, setMessage] = useState('');
 
   // Check if user is admin (you can modify this to check for specific user ID or email)
-  const isAdmin = user && (user.email === 'onuoraprecious@gmail.com' || user._id === 'admin-user-id');
+  const isAdmin = user && (user.email === 'onuoraprecious@gmail.com' || user._id === '68c2d1c906745ea4203f5272');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
