@@ -31,7 +31,7 @@ const Admin = () => {
 
   const fetchEvents = async () => {
     try {
-      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : '/api/events';
       const response = await fetch(baseUrl);
       const result = await response.json();
       
@@ -58,7 +58,7 @@ const Admin = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : '/api/events';
       const adminUrl = baseUrl.replace('/api/events', '/api/events/admin');
       
       const response = await fetch(adminUrl, {
@@ -112,7 +112,7 @@ const Admin = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : 'http://localhost:5001/api/events';
+      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : '/api/events';
       const deleteUrl = baseUrl.replace('/api/events', '/api/events/delete');
       
       const response = await fetch(deleteUrl, {
