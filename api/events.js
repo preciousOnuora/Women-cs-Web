@@ -32,6 +32,9 @@ const Event = mongoose.model('Event', eventSchema);
 // Global storage for admin-created events (in-memory for Vercel)
 global.adminEvents = global.adminEvents || [];
 
+// Simple in-memory storage that persists during function lifetime
+let adminEvents = [];
+
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -228,7 +231,7 @@ module.exports = async function handler(req, res) {
           }
           
           // Add admin-created events to the response
-          const allEvents = [...events, ...global.adminEvents];
+          const allEvents = [...events, ...global.adminEvents, ...adminEvents];
           
           res.status(200).json({
             success: true,
@@ -287,7 +290,7 @@ module.exports = async function handler(req, res) {
           ];
           
           // Add admin-created events to the response
-          const allEvents = [...events, ...global.adminEvents];
+          const allEvents = [...events, ...global.adminEvents, ...adminEvents];
           
           res.status(200).json({
             success: true,
@@ -486,12 +489,14 @@ module.exports = async function handler(req, res) {
           participants: []
         };
 
-        // Store in global admin events array
+        // Store in both global and local admin events arrays
         global.adminEvents = global.adminEvents || [];
         global.adminEvents.push(newEvent);
+        adminEvents.push(newEvent);
 
         console.log('Created event:', newEvent);
-        console.log('Total admin events:', global.adminEvents.length);
+        console.log('Total admin events (global):', global.adminEvents.length);
+        console.log('Total admin events (local):', adminEvents.length);
 
         res.status(201).json({
           success: true,
@@ -529,16 +534,23 @@ module.exports = async function handler(req, res) {
         // In a real app, you'd delete from database
         console.log('Deleting event with ID:', eventId);
 
-        // Initialize global admin events if it doesn't exist
+        // Initialize admin events if they don't exist
         global.adminEvents = global.adminEvents || [];
         
-        // Find and remove the event
-        const initialLength = global.adminEvents.length;
-        global.adminEvents = global.adminEvents.filter(event => event._id !== eventId);
-        const removedCount = initialLength - global.adminEvents.length;
+        // Find and remove the event from both arrays
+        const initialGlobalLength = global.adminEvents.length;
+        const initialLocalLength = adminEvents.length;
         
-        console.log(`Removed ${removedCount} event(s) with ID: ${eventId}`);
-        console.log('Remaining admin events:', global.adminEvents.length);
+        global.adminEvents = global.adminEvents.filter(event => event._id !== eventId);
+        adminEvents = adminEvents.filter(event => event._id !== eventId);
+        
+        const removedGlobalCount = initialGlobalLength - global.adminEvents.length;
+        const removedLocalCount = initialLocalLength - adminEvents.length;
+        
+        console.log(`Removed ${removedGlobalCount} event(s) from global array with ID: ${eventId}`);
+        console.log(`Removed ${removedLocalCount} event(s) from local array with ID: ${eventId}`);
+        console.log('Remaining admin events (global):', global.adminEvents.length);
+        console.log('Remaining admin events (local):', adminEvents.length);
 
         res.status(200).json({
           success: true,
