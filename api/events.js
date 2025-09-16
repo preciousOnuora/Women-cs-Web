@@ -158,14 +158,22 @@ module.exports = async function handler(req, res) {
       } else {
         // Get all events from MongoDB
         try {
+          console.log('Attempting to connect to MongoDB...');
           let events = await Event.find().sort({ date: 1 });
           
+          console.log('GET /api/events - Database connection successful!');
           console.log('GET /api/events - Database events found:', events.length);
+          
+          if (events.length > 0) {
+            console.log('Events from database:');
+            events.forEach(event => console.log(`  - ${event.title} (${event.date})`));
+          }
           
           // Return all database events (this ensures any events added to MongoDB will show up)
           res.status(200).json({
             success: true,
-            data: events
+            data: events,
+            source: 'mongodb'
           });
           
         } catch (dbError) {
