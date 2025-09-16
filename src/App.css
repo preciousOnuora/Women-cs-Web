@@ -225,25 +225,7 @@ main {
   flex-wrap: wrap;
 }
 
-.event-card {
-  background: rgba(147, 51, 234, 0.8);
-  padding: 2rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  min-width: 300px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-}
-
-.event-card h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
+/* Removed global event-card styles to prevent conflicts with Events.css */
 
 .countdown {
   display: flex;
@@ -258,12 +240,11 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
   padding: 1rem;
   border-radius: 10px;
   min-width: 80px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .countdown-number {
@@ -808,7 +789,7 @@ form .form-group input::placeholder, form .form-group textarea::placeholder {
     margin: 2rem 0;
   }
 
-  .event-card, .feedback-card {
+  .feedback-card {
     min-width: 280px;
     width: 100%;
     max-width: 350px;
@@ -1184,7 +1165,7 @@ form .form-group input::placeholder, form .form-group textarea::placeholder {
     margin: 1.5rem 0;
   }
 
-  .event-card, .feedback-card {
+  .feedback-card {
     min-width: 250px;
     padding: 1.5rem;
     height: auto;
