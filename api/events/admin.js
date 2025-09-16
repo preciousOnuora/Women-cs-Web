@@ -83,7 +83,7 @@ module.exports = async function handler(req, res) {
         });
       }
 
-      // For Vercel, we'll add the event to our sample events
+      // For Vercel, we'll add the event to our global admin events
       // In a real app, you'd save to database
       const newEvent = {
         _id: `admin_${Date.now()}`,
@@ -99,7 +99,12 @@ module.exports = async function handler(req, res) {
         participants: []
       };
 
+      // Store in global admin events array
+      global.adminEvents = global.adminEvents || [];
+      global.adminEvents.push(newEvent);
+
       console.log('Created event:', newEvent);
+      console.log('Total admin events:', global.adminEvents.length);
 
       res.status(201).json({
         success: true,

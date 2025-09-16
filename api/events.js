@@ -29,6 +29,9 @@ const eventSchema = new mongoose.Schema({
 
 const Event = mongoose.model('Event', eventSchema);
 
+// Global storage for admin-created events (in-memory for Vercel)
+global.adminEvents = global.adminEvents || [];
+
 module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -224,9 +227,12 @@ module.exports = async function handler(req, res) {
             ];
           }
           
+          // Add admin-created events to the response
+          const allEvents = [...events, ...global.adminEvents];
+          
           res.status(200).json({
             success: true,
-            data: events
+            data: allEvents
           });
         } catch (dbError) {
           console.error('Database error fetching events:', dbError);
@@ -280,9 +286,12 @@ module.exports = async function handler(req, res) {
             }
           ];
           
+          // Add admin-created events to the response
+          const allEvents = [...events, ...global.adminEvents];
+          
           res.status(200).json({
             success: true,
-            data: events
+            data: allEvents
           });
         }
       }
