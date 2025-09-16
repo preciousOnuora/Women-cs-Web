@@ -29,58 +29,11 @@ const eventSchema = new mongoose.Schema({
 
 const Event = mongoose.model('Event', eventSchema);
 
-// Global storage for admin-created events (in-memory for Vercel)
-global.adminEvents = global.adminEvents || [];
-
 // Global storage for sample event registrations (in-memory for Vercel)
 global.sampleEventRegistrations = global.sampleEventRegistrations || {};
 
-// Initialize admin events with some default events if empty
-if (!global.adminEvents || global.adminEvents.length === 0) {
-  global.adminEvents = [
-    {
-      _id: 'bowling_real',
-      title: "Bowling Night",
-      description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
-      date: new Date('2025-10-16T17:00:00Z'),
-      time: "5:00 PM",
-      location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
-      maxParticipants: 30,
-      currentParticipants: 0,
-      isUpcoming: true,
-      sponsor: "To be announced",
-      participants: []
-    }
-  ];
-  console.log('Initialized global.adminEvents with', global.adminEvents.length, 'events');
-}
-
-// Function to ensure admin events are initialized
-function ensureAdminEvents() {
-  if (!global.adminEvents || global.adminEvents.length === 0) {
-    global.adminEvents = [
-      {
-        _id: 'bowling_real',
-        title: "Bowling Night",
-        description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
-        date: new Date('2025-10-16T17:00:00Z'),
-        time: "5:00 PM",
-        location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
-        maxParticipants: 30,
-        currentParticipants: 0,
-        isUpcoming: true,
-        sponsor: "To be announced",
-        participants: []
-      }
-    ];
-    console.log('Re-initialized global.adminEvents with', global.adminEvents.length, 'events');
-  }
-}
 
 module.exports = async function handler(req, res) {
-  // Ensure admin events are always initialized
-  ensureAdminEvents();
-  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -203,14 +156,77 @@ module.exports = async function handler(req, res) {
           });
         }
       } else {
-        // Get all events
+        // Get all events from MongoDB
         try {
           let events = await Event.find().sort({ date: 1 });
           
+          console.log('GET /api/events - Database events found:', events.length);
           
+          // Return all database events (this ensures any events added to MongoDB will show up)
+          res.status(200).json({
+            success: true,
+            data: events
+          });
           
-          // If no events in database, return sample events
-          if (events.length === 0) {
+        } catch (dbError) {
+          console.error('Database error fetching events:', dbError);
+          console.log('Database connection failed, returning sample events');
+          
+          // Only fall back to sample events if database is completely unavailable
+          const events = [
+            {
+              _id: 'sample2',
+              title: "Women in Tech Networking Event",
+              description: "Join us for an evening of networking, inspiration, and connection with fellow women in technology. This event features keynote speakers, panel discussions, and networking opportunities.",
+              date: new Date('2024-12-15T18:00:00Z'),
+              time: "6:00 PM",
+              location: "Edinburgh University, Informatics Forum",
+              maxParticipants: 100,
+              currentParticipants: 0,
+              isUpcoming: true
+            },
+            {
+              _id: 'sample3',
+              title: "Coding Workshop: Introduction to React",
+              description: "Learn the fundamentals of React development in this hands-on workshop. Perfect for beginners and those looking to refresh their skills. We'll cover components, state, and props.",
+              date: new Date('2024-12-20T14:00:00Z'),
+              time: "2:00 PM",
+              location: "Online - Zoom",
+              maxParticipants: 30,
+              currentParticipants: 0,
+              isUpcoming: true
+            },
+            {
+              _id: 'sample4',
+              title: "Career Panel: Breaking into Tech",
+              description: "Hear from successful women in tech about their career journeys, challenges they've overcome, and advice for those starting out. Q&A session included.",
+              date: new Date('2025-01-10T17:30:00Z'),
+              time: "5:30 PM",
+              location: "Edinburgh University, Appleton Tower",
+              maxParticipants: 80,
+              currentParticipants: 0,
+              isUpcoming: true
+            },
+            {
+              _id: 'sample_hackathon_2026',
+              title: "24HR HACKATHON 2026",
+              description: "Work in <span class=\"highlight\">Teams of 5</span> to collaborate, code, and innovate! This event features <span class=\"highlight\">inspiring talks on career journeys</span>, networking opportunities with <span class=\"highlight\">industry professionals</span>, and the chance to win <span class=\"highlight\">prizes</span>. Fuel your creativity with <span class=\"highlight\">free pizza</span> and showcase your skills in this unmissable coding adventure!",
+              date: new Date('2026-02-07T10:30:00Z'),
+              time: "10:30 AM",
+              location: "Heriot-Watt Campus, Robotarium",
+              maxParticipants: 100,
+              currentParticipants: 2,
+              isUpcoming: true
+            }
+          ];
+          
+          res.status(200).json({
+            success: true,
+            data: events
+          });
+        }
+      }
+    } else if (req.method === 'POST') {
             console.log('No events in database, returning sample events');
             events = [
               {
@@ -459,61 +475,6 @@ module.exports = async function handler(req, res) {
           }
 
 
-          // Check if this is the Bowling event (real event, not in database)
-          if (eventId === 'bowling_real') {
-            console.log('Registration for Bowling event - handling as real event');
-            
-            // Initialize global admin events if not exists
-            global.adminEvents = global.adminEvents || [];
-            
-            // Find the Bowling event in admin events
-            let bowlingEvent = global.adminEvents.find(event => event._id === 'bowling_real');
-            
-            if (!bowlingEvent) {
-              // Create the Bowling event if it doesn't exist
-              bowlingEvent = {
-                _id: 'bowling_real',
-                title: "Bowling Night",
-                description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
-                date: new Date('2025-10-16T17:00:00Z'),
-                time: "5:00 PM",
-                location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
-                maxParticipants: 30,
-                currentParticipants: 0,
-                isUpcoming: true,
-                sponsor: "To be announced",
-                participants: []
-              };
-              global.adminEvents.push(bowlingEvent);
-            }
-            
-            // Check if user is already registered
-            if (bowlingEvent.participants.includes(userId)) {
-              return res.status(400).json({
-                success: false,
-                message: 'You are already registered for this event'
-              });
-            }
-            
-            // Check if event is full
-            if (bowlingEvent.currentParticipants >= bowlingEvent.maxParticipants) {
-              return res.status(400).json({
-                success: false,
-                message: 'This event is full'
-              });
-            }
-            
-            // Add user to participants and increment count
-            bowlingEvent.participants.push(userId);
-            bowlingEvent.currentParticipants++;
-            
-            console.log(`User ${userId} registered for Bowling event. Total participants: ${bowlingEvent.currentParticipants}`);
-            
-            return res.status(200).json({
-              success: true,
-              message: 'Registration successful! You are now registered for the Bowling Night event.'
-            });
-          }
 
           // Try to find the event in database
           try {
@@ -569,13 +530,11 @@ module.exports = async function handler(req, res) {
         }
       }
     } else if (req.method === 'POST' && req.url.includes('/admin')) {
-      // Admin route to create new events
-      ensureAdminEvents(); // Ensure admin events are initialized
+      // Admin route to create new events in MongoDB
       console.log('=== ADMIN ROUTE HIT ===');
       console.log('URL:', req.url);
       console.log('Method:', req.method);
       console.log('Body:', req.body);
-      console.log('Current global.adminEvents length:', global.adminEvents?.length || 0);
       console.log('======================');
       
       try {
@@ -588,9 +547,8 @@ module.exports = async function handler(req, res) {
           });
         }
 
-        // For Vercel, we'll add the event to our global admin events
-        const newEvent = {
-          _id: `admin_${Date.now()}`,
+        // Create new event in MongoDB
+        const newEvent = new Event({
           title,
           description,
           date: new Date(date),
@@ -598,25 +556,18 @@ module.exports = async function handler(req, res) {
           location,
           maxParticipants: parseInt(maxParticipants),
           currentParticipants: parseInt(currentParticipants),
-          isUpcoming: isUpcoming,
+          isActive: isUpcoming,
           sponsor: sponsor || 'To be announced',
           participants: []
-        };
+        });
 
-        // Store in global admin events array
-        global.adminEvents = global.adminEvents || [];
-        global.adminEvents.push(newEvent);
-
-        console.log('Created event:', newEvent);
-        console.log('Total admin events (global):', global.adminEvents.length);
-
-        console.log('Event created successfully:', newEvent._id);
-        console.log('Total admin events after creation:', global.adminEvents.length);
+        const savedEvent = await newEvent.save();
+        console.log('Event saved to MongoDB:', savedEvent._id);
         
         res.status(201).json({
           success: true,
-          message: 'Event created successfully!',
-          data: newEvent
+          message: 'Event created successfully in database!',
+          data: savedEvent
         });
 
       } catch (error) {
@@ -628,13 +579,11 @@ module.exports = async function handler(req, res) {
         });
       }
     } else if (req.method === 'DELETE' && req.url.includes('/delete')) {
-      // Delete event route
-      ensureAdminEvents(); // Ensure admin events are initialized
+      // Delete event route from MongoDB
       console.log('=== DELETE ROUTE HIT ===');
       console.log('URL:', req.url);
       console.log('Method:', req.method);
       console.log('Body:', req.body);
-      console.log('Current global.adminEvents length:', global.adminEvents?.length || 0);
       console.log('========================');
       
       try {
@@ -647,27 +596,22 @@ module.exports = async function handler(req, res) {
           });
         }
 
-        // For Vercel, we'll remove from global admin events
-        // In a real app, you'd delete from database
+        // Delete from MongoDB
         console.log('Deleting event with ID:', eventId);
-
-        // Initialize admin events if they don't exist
-        global.adminEvents = global.adminEvents || [];
+        const deletedEvent = await Event.findByIdAndDelete(eventId);
         
-        // Find and remove the event from global array
-        const initialLength = global.adminEvents.length;
-        global.adminEvents = global.adminEvents.filter(event => event._id !== eventId);
-        const removedCount = initialLength - global.adminEvents.length;
-        
-        console.log(`Removed ${removedCount} event(s) with ID: ${eventId}`);
-        console.log('Remaining admin events:', global.adminEvents.length);
+        if (!deletedEvent) {
+          return res.status(404).json({
+            success: false,
+            message: 'Event not found'
+          });
+        }
 
-        console.log('Event deleted successfully:', eventId);
-        console.log('Remaining admin events after deletion:', global.adminEvents.length);
+        console.log('Event deleted successfully from MongoDB:', eventId);
         
         res.status(200).json({
           success: true,
-          message: 'Event deleted successfully'
+          message: 'Event deleted successfully from database'
         });
       } catch (error) {
         console.error('Error deleting event:', error);
