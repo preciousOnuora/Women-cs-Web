@@ -64,6 +64,8 @@
   border: 2px solid #e1e5e9;
   border-radius: 8px;
   font-size: 1rem;
+  color: #000;
+  background-color: #fff;
   transition: border-color 0.3s ease;
 }
 
@@ -72,6 +74,12 @@
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #666;
+  opacity: 1;
 }
 
 .form-group textarea {
