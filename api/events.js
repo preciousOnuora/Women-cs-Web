@@ -263,9 +263,13 @@ module.exports = async function handler(req, res) {
           // Add admin-created events to the response
           const allEvents = [...events, ...global.adminEvents];
           
+          // Sort all events by date (earliest first)
+          allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+          
           console.log('GET /api/events - Database events:', events.length);
           console.log('GET /api/events - Admin events:', global.adminEvents?.length || 0);
           console.log('GET /api/events - Total events:', allEvents.length);
+          console.log('Event order:', allEvents.map(e => `${e.title} - ${e.date}`));
           
           // Update Bowling event participant count if it exists in admin events
           const bowlingEvent = global.adminEvents?.find(event => event._id === 'bowling_real');
@@ -336,9 +340,13 @@ module.exports = async function handler(req, res) {
           // Add admin-created events to the response
           const allEvents = [...events, ...global.adminEvents];
           
+          // Sort all events by date (earliest first)
+          allEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+          
           console.log('GET /api/events - Database events:', events.length);
           console.log('GET /api/events - Admin events:', global.adminEvents?.length || 0);
           console.log('GET /api/events - Total events:', allEvents.length);
+          console.log('Event order:', allEvents.map(e => `${e.title} - ${e.date}`));
           
           // Update Bowling event participant count if it exists in admin events
           const bowlingEvent = global.adminEvents?.find(event => event._id === 'bowling_real');
