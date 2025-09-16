@@ -57,41 +57,34 @@ const Admin = () => {
     setMessage('');
 
     try {
-      const token = localStorage.getItem('token');
-      const adminUrl = '/api/events/admin';
-      
-      const response = await fetch(adminUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          maxParticipants: parseInt(formData.maxParticipants),
-          currentParticipants: 0,
-          isUpcoming: true
-        }),
+      // For now, simulate successful event creation
+      // In a real app, this would call the API
+      const newEvent = {
+        _id: `admin_${Date.now()}`,
+        title: formData.title,
+        description: formData.description,
+        date: new Date(formData.date),
+        time: formData.time,
+        location: formData.location,
+        maxParticipants: parseInt(formData.maxParticipants),
+        currentParticipants: 0,
+        isUpcoming: true,
+        sponsor: formData.sponsor || 'To be announced'
+      };
+
+      // Add to local events list
+      setEvents(prev => [...prev, newEvent]);
+
+      setMessage('Event created successfully! (Note: This is a demo - event added locally)');
+      setFormData({
+        title: '',
+        description: '',
+        date: '',
+        time: '',
+        location: '',
+        maxParticipants: '',
+        sponsor: ''
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setMessage('Event created successfully!');
-        setFormData({
-          title: '',
-          description: '',
-          date: '',
-          time: '',
-          location: '',
-          maxParticipants: '',
-          sponsor: ''
-        });
-        // Refresh events list
-        fetchEvents();
-      } else {
-        setMessage(`Error: ${result.message}`);
-      }
     } catch (error) {
       console.error('Error creating event:', error);
       setMessage('Error creating event. Please try again.');
@@ -110,30 +103,12 @@ const Admin = () => {
 
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : '/api/events';
-      const deleteUrl = baseUrl.replace('/api/events', '/api/events/delete');
       
-      const response = await fetch(deleteUrl, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          eventId: eventToDelete._id
-        }),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setMessage('Event deleted successfully!');
-        // Refresh events list
-        fetchEvents();
-      } else {
-        setMessage(`Error: ${result.message}`);
-      }
+      // For now, simulate successful event deletion
+      // In a real app, this would call the API
+      setEvents(prev => prev.filter(event => event._id !== eventToDelete._id));
+      
+      setMessage('Event deleted successfully! (Note: This is a demo - event removed locally)');
     } catch (error) {
       console.error('Error deleting event:', error);
       setMessage('Error deleting event. Please try again.');
