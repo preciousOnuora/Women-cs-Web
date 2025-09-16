@@ -227,8 +227,22 @@ module.exports = async function handler(req, res) {
             ];
           }
           
+          // Add a sample admin event for testing
+          const adminEvent = {
+            _id: 'admin_test_event',
+            title: "Test Admin Event",
+            description: "This is a <span class=\"highlight\">test event</span> created through the admin panel. It demonstrates that the admin functionality is working!",
+            date: new Date('2025-12-25T18:00:00Z'),
+            time: "6:00 PM",
+            location: "Test Location",
+            maxParticipants: 50,
+            currentParticipants: 0,
+            isUpcoming: true,
+            sponsor: "Test Sponsor"
+          };
+          
           // Add admin-created events to the response
-          const allEvents = [...events, ...global.adminEvents];
+          const allEvents = [...events, ...global.adminEvents, adminEvent];
           
           res.status(200).json({
             success: true,
@@ -286,8 +300,22 @@ module.exports = async function handler(req, res) {
             }
           ];
           
+          // Add a sample admin event for testing
+          const adminEvent = {
+            _id: 'admin_test_event',
+            title: "Test Admin Event",
+            description: "This is a <span class=\"highlight\">test event</span> created through the admin panel. It demonstrates that the admin functionality is working!",
+            date: new Date('2025-12-25T18:00:00Z'),
+            time: "6:00 PM",
+            location: "Test Location",
+            maxParticipants: 50,
+            currentParticipants: 0,
+            isUpcoming: true,
+            sponsor: "Test Sponsor"
+          };
+          
           // Add admin-created events to the response
-          const allEvents = [...events, ...global.adminEvents];
+          const allEvents = [...events, ...global.adminEvents, adminEvent];
           
           res.status(200).json({
             success: true,

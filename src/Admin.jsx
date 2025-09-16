@@ -58,8 +58,7 @@ const Admin = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const baseUrl = process.env.NODE_ENV === 'production' ? '/api/events' : '/api/events';
-      const adminUrl = baseUrl.replace('/api/events', '/api/events/admin');
+      const adminUrl = '/api/events/admin';
       
       const response = await fetch(adminUrl, {
         method: 'POST',
