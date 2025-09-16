@@ -36,7 +36,7 @@ global.adminEvents = global.adminEvents || [];
 global.sampleEventRegistrations = global.sampleEventRegistrations || {};
 
 // Initialize admin events with some default events if empty
-if (global.adminEvents.length === 0) {
+if (!global.adminEvents || global.adminEvents.length === 0) {
   global.adminEvents = [
     {
       _id: 'bowling_real',
@@ -52,9 +52,35 @@ if (global.adminEvents.length === 0) {
       participants: []
     }
   ];
+  console.log('Initialized global.adminEvents with', global.adminEvents.length, 'events');
+}
+
+// Function to ensure admin events are initialized
+function ensureAdminEvents() {
+  if (!global.adminEvents || global.adminEvents.length === 0) {
+    global.adminEvents = [
+      {
+        _id: 'bowling_real',
+        title: "Bowling Night",
+        description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
+        date: new Date('2025-10-16T17:00:00Z'),
+        time: "5:00 PM",
+        location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
+        maxParticipants: 30,
+        currentParticipants: 0,
+        isUpcoming: true,
+        sponsor: "To be announced",
+        participants: []
+      }
+    ];
+    console.log('Re-initialized global.adminEvents with', global.adminEvents.length, 'events');
+  }
 }
 
 module.exports = async function handler(req, res) {
+  // Ensure admin events are always initialized
+  ensureAdminEvents();
+  
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -182,24 +208,6 @@ module.exports = async function handler(req, res) {
           let events = await Event.find().sort({ date: 1 });
           
           
-          // Always add the Bowling event as a real event (not sample)
-          const bowlingEventExists = events.some(event => event.title === "Bowling Night");
-          if (!bowlingEventExists) {
-            console.log('Adding Bowling event as real event');
-            events.unshift({
-              _id: 'bowling_real',
-              title: "Bowling Night",
-              description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
-              date: new Date('2025-10-16T17:00:00Z'),
-              time: "5:00 PM",
-              location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
-              maxParticipants: 30,
-              currentParticipants: 0,
-              isUpcoming: true,
-              sponsor: "To be announced",
-              participants: []
-            });
-          }
           
           // If no events in database, return sample events
           if (events.length === 0) {
@@ -279,19 +287,6 @@ module.exports = async function handler(req, res) {
           
           // Return sample events when database connection fails
           const events = [
-            {
-              _id: 'bowling_real',
-              title: "Bowling Night",
-              description: "Join us for a <span class=\"highlight\">fun evening of bowling</span>! A great opportunity to <span class=\"highlight\">socialize, have fun</span>, and connect with fellow Women@CS members. Whether you're a <span class=\"highlight\">bowling pro</span> or a <span class=\"highlight\">complete beginner</span>, everyone is welcome!",
-              date: new Date('2025-10-16T17:00:00Z'),
-              time: "5:00 PM",
-              location: "Fountain Park, Dundee St, Edinburgh EH11 1AW",
-              maxParticipants: 30,
-              currentParticipants: 0,
-              isUpcoming: true,
-              sponsor: "To be announced",
-              participants: []
-            },
             {
               _id: 'sample2',
               title: "Women in Tech Networking Event",
@@ -567,6 +562,7 @@ module.exports = async function handler(req, res) {
       }
     } else if (req.method === 'POST' && req.url.includes('/admin')) {
       // Admin route to create new events
+      ensureAdminEvents(); // Ensure admin events are initialized
       console.log('=== ADMIN ROUTE HIT ===');
       console.log('URL:', req.url);
       console.log('Method:', req.method);
@@ -606,6 +602,9 @@ module.exports = async function handler(req, res) {
         console.log('Created event:', newEvent);
         console.log('Total admin events (global):', global.adminEvents.length);
 
+        console.log('Event created successfully:', newEvent._id);
+        console.log('Total admin events after creation:', global.adminEvents.length);
+        
         res.status(201).json({
           success: true,
           message: 'Event created successfully!',
@@ -622,6 +621,7 @@ module.exports = async function handler(req, res) {
       }
     } else if (req.method === 'DELETE' && req.url.includes('/delete')) {
       // Delete event route
+      ensureAdminEvents(); // Ensure admin events are initialized
       console.log('=== DELETE ROUTE HIT ===');
       console.log('URL:', req.url);
       console.log('Method:', req.method);
@@ -654,6 +654,9 @@ module.exports = async function handler(req, res) {
         console.log(`Removed ${removedCount} event(s) with ID: ${eventId}`);
         console.log('Remaining admin events:', global.adminEvents.length);
 
+        console.log('Event deleted successfully:', eventId);
+        console.log('Remaining admin events after deletion:', global.adminEvents.length);
+        
         res.status(200).json({
           success: true,
           message: 'Event deleted successfully'
