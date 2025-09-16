@@ -67,6 +67,9 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    console.log('Events API called:', req.method, req.url);
+    console.log('Request body:', req.body);
+    
     if (req.method === 'GET') {
       // Check if this is a request for user events
       const { userId } = req.query;
@@ -441,7 +444,7 @@ module.exports = async function handler(req, res) {
           });
         }
       }
-    } else if (req.method === 'POST' && (req.url === '/api/events/admin' || req.url.endsWith('/admin'))) {
+    } else if (req.method === 'POST' && req.url.includes('/admin')) {
       // Admin route to create new events
       console.log('Admin route hit:', req.url, req.method);
       try {
@@ -484,7 +487,7 @@ module.exports = async function handler(req, res) {
           error: error.message
         });
       }
-    } else if (req.method === 'DELETE' && (req.url === '/api/events/delete' || req.url.endsWith('/delete'))) {
+    } else if (req.method === 'DELETE' && req.url.includes('/delete')) {
       // Delete event route
       console.log('Delete route hit:', req.url, req.method);
       try {
@@ -514,8 +517,12 @@ module.exports = async function handler(req, res) {
         });
       }
     } else {
+      console.log('Unhandled request:', req.method, req.url);
       res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+      res.status(405).json({
+        success: false,
+        message: `Method ${req.method} Not Allowed for ${req.url}`
+      });
     }
   } catch (error) {
     console.error('Error in events API:', error);
