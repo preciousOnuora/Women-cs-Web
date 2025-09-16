@@ -259,19 +259,23 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: transparent !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
   padding: 1rem;
   border-radius: 10px;
   min-width: 80px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Ensure countdown timer has no background even inside event cards */
+/* Ensure countdown timer has consistent styling even inside event cards */
 .event-card .countdown-item,
 .hero-section .event-card .countdown-item,
 .countdown .countdown-item {
-  background: transparent !important;
-  background-color: transparent !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Force override any white backgrounds on countdown */

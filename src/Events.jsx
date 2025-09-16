@@ -183,44 +183,42 @@ const Events = () => {
           ) : (
             <div className="events-grid">
               {upcomingEvents.map((event) => (
-                <div key={event._id} className="event-card">
-                  <div className="event-header">
-                    <h3 className="event-title">{event.title}</h3>
-                    <div className="event-participants">
-                      {event.currentParticipants}/{event.maxParticipants} registered
+                <div key={event._id} className="past-event-card">
+                  <div className="event-main-content">
+                    <div className="event-header">
+                      <h1 className="event-name">{event.title}</h1>
+                      <div className="event-participants">
+                        {event.currentParticipants}/{event.maxParticipants} registered
+                      </div>
                     </div>
+
+                    <p className="event-description">{event.description}</p>
+
+                    <div className="event-details">
+                      <div className="location">
+                        <span className="detail-label">Location:</span>
+                        <span className="detail-value">{event.location}</span>
+                      </div>
+                      <div className="datetime">
+                        <span className="detail-label">Date & Time:</span>
+                        <span className="detail-value">{formatDate(event.date)} {event.time}</span>
+                      </div>
+                      <div className="sponsor">
+                        <span className="detail-label">Sponsored by:</span>
+                        <span className="detail-value">To be announced</span>
+                      </div>
+                    </div>
+
+                    <button 
+                      className={`register-btn ${event.currentParticipants >= event.maxParticipants ? 'full' : ''}`}
+                      onClick={() => handleRegister(event._id)}
+                      disabled={registering[event._id] || event.currentParticipants >= event.maxParticipants}
+                    >
+                      {registering[event._id] ? 'Registering...' : 
+                       event.currentParticipants >= event.maxParticipants ? 'Event Full' : 
+                       'Register for Event'}
+                    </button>
                   </div>
-                  
-                  <p className="event-description">{event.description}</p>
-                  
-                  <div className="event-details">
-                    <div className="event-detail">
-                      <span className="detail-label">Date:</span>
-                      <span className="detail-value">{formatDate(event.date)}</span>
-                    </div>
-                    <div className="event-detail">
-                      <span className="detail-label">Time:</span>
-                      <span className="detail-value">{event.time}</span>
-                    </div>
-                    <div className="event-detail">
-                      <span className="detail-label">Location:</span>
-                      <span className="detail-value">{event.location}</span>
-                    </div>
-                    <div className="event-detail">
-                      <span className="detail-label">Sponsor:</span>
-                      <span className="detail-value">To be announced</span>
-                    </div>
-                  </div>
-                  
-                  <button 
-                    className={`register-btn ${event.currentParticipants >= event.maxParticipants ? 'full' : ''}`}
-                    onClick={() => handleRegister(event._id)}
-                    disabled={registering[event._id] || event.currentParticipants >= event.maxParticipants}
-                  >
-                    {registering[event._id] ? 'Registering...' : 
-                     event.currentParticipants >= event.maxParticipants ? 'Event Full' : 
-                     'Register for Event'}
-                  </button>
                 </div>
               ))}
             </div>
