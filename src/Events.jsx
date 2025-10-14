@@ -205,7 +205,7 @@ const Events = () => {
                       </div>
                       <div className="sponsor">
                         <span className="detail-label">Sponsored by:</span>
-                        <span className="detail-value">To be announced</span>
+                        <span className="detail-value">{event.sponsor || 'To be announced'}</span>
                       </div>
                     </div>
 
