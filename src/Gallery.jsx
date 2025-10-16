@@ -22,10 +22,34 @@ import hthon13 from './Images/hthon13.jpg';
 import hthon14 from './Images/hthon14.jpg';
 import hthon15 from './Images/hthon15.jpg';
 import hthon16 from './Images/hthon16.jpg';
+import bowling1 from './Images/bowling1.HEIC';
+import bowling2 from './Images/bowling2.HEIC';
+import bowling3 from './Images/bowling3.HEIC';
+import bowling4 from './Images/bowling4.HEIC';
+import bowling5 from './Images/bowling5.HEIC';
+import bowling6 from './Images/bowling6.HEIC';
+import bowling7 from './Images/bowling7.HEIC';
+import bowling8 from './Images/bowling8.HEIC';
 
 const Gallery = () => {
   // Event data with actual imported images
   const events = [
+    {
+      id: 3,
+      title: "Bowling Night",
+      date: "January 2025",
+      description: "Join us for an exciting evening of bowling and fun! A great opportunity to socialize, compete in friendly games, and build connections with fellow Women@CS members. Whether you're a bowling pro or trying it for the first time, everyone is welcome!",
+      photos: [
+        { id: 25, src: bowling1, alt: "Bowling alley setup" },
+        { id: 26, src: bowling2, alt: "Team getting ready to bowl" },
+        { id: 27, src: bowling3, alt: "Perfect strike!" },
+        { id: 28, src: bowling4, alt: "Group celebration" },
+        { id: 29, src: bowling5, alt: "Bowling shoes and equipment" },
+        { id: 30, src: bowling6, alt: "Team photo at bowling alley" },
+        { id: 31, src: bowling7, alt: "High fives after a great game" },
+        { id: 32, src: bowling8, alt: "Final group photo" }
+      ]
+    },
     {
       id: 1,
       title: "Edinburgh Zoo",
