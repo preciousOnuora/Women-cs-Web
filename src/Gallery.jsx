@@ -37,7 +37,7 @@ const Gallery = () => {
     {
       id: 3,
       title: "Bowling Night",
-      date: "January 2025",
+      date: "October 2025",
       description: "Join us for an exciting evening of bowling and fun! A great opportunity to socialize, compete in friendly games, and build connections with fellow Women@CS members. Whether you're a bowling pro or trying it for the first time, everyone is welcome!",
       photos: [
         { id: 25, src: bowling1},
