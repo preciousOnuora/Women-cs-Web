@@ -265,7 +265,7 @@ const Events = () => {
                     {/* Event Passed Message */}
                     <div className="event-passed-message">
                       <h3 className="passed-title">Event Passed</h3>
-                      <p className="passed-text">This event has already taken place. Stay tuned for future events!</p>
+                      <p className="passed-text">This event has already taken place. Check out our <a href="/gallery" className="gallery-link">Gallery</a> to view photos from this event!</p>
                     </div>
                   </div>
                 </div>
@@ -310,7 +310,7 @@ const Events = () => {
                 {/* Event Passed Message */}
                 <div className="event-passed-message">
                   <h3 className="passed-title">Event Passed</h3>
-                  <p className="passed-text">This event has already taken place. Stay tuned for future events!</p>
+                  <p className="passed-text">This event has already taken place. Check out our <a href="/gallery" className="gallery-link">Gallery</a> to view photos from this event!</p>
                 </div>
               </div>
             </div>
@@ -350,7 +350,7 @@ const Events = () => {
                 {/* Event Passed Message */}
                 <div className="event-passed-message">
                   <h3 className="passed-title">Event Passed</h3>
-                  <p className="passed-text">This event has already taken place. Stay tuned for future events!</p>
+                  <p className="passed-text">This event has already taken place. Check out our <a href="/gallery" className="gallery-link">Gallery</a> to view photos from this event!</p>
                 </div>
               </div>
             </div>

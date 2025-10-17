@@ -40,14 +40,14 @@ const Gallery = () => {
       date: "January 2025",
       description: "Join us for an exciting evening of bowling and fun! A great opportunity to socialize, compete in friendly games, and build connections with fellow Women@CS members. Whether you're a bowling pro or trying it for the first time, everyone is welcome!",
       photos: [
-        { id: 25, src: bowling1, alt: "Bowling alley setup" },
-        { id: 26, src: bowling2, alt: "Team getting ready to bowl" },
-        { id: 27, src: bowling3, alt: "Perfect strike!" },
-        { id: 28, src: bowling4, alt: "Group celebration" },
-        { id: 29, src: bowling5, alt: "Bowling shoes and equipment" },
-        { id: 30, src: bowling6, alt: "Team photo at bowling alley" },
-        { id: 31, src: bowling7, alt: "High fives after a great game" },
-        { id: 32, src: bowling8, alt: "Final group photo" }
+        { id: 25, src: bowling1},
+        { id: 26, src: bowling2, alt: "Group photo" },
+        { id: 27, src: bowling3, alt: "Final scores!" },
+        { id: 28, src: bowling4},
+        { id: 29, src: bowling5, alt: "Group photo" },
+        { id: 30, src: bowling6},
+        { id: 31, src: bowling7},
+        { id: 32, src: bowling8}
       ]
     },
     {
