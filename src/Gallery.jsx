@@ -38,7 +38,7 @@ const Gallery = () => {
       id: 3,
       title: "Bowling Night",
       date: "October 2025",
-      description: "Join us for an exciting evening of bowling and fun! A great opportunity to socialize, compete in friendly games, and build connections with fellow Women@CS members. Whether you're a bowling pro or trying it for the first time, everyone is welcome!",
+      description: "Another fantastic event — a fun-filled evening of bowling, generously sponsored by Athena SWAN! Taking place during reading week, just like our very first event last year, it was the perfect opportunity to unwind, connect, and keep strengthening our community.",
       photos: [
         { id: 25, src: bowling1},
         { id: 26, src: bowling2, alt: "Group photo" },
@@ -48,20 +48,6 @@ const Gallery = () => {
         { id: 30, src: bowling6},
         { id: 31, src: bowling7},
         { id: 32, src: bowling8}
-      ]
-    },
-    {
-      id: 1,
-      title: "Edinburgh Zoo",
-      date: "October 2024",
-      description: "Our first ever event - a fantastic day out at Edinburgh Zoo, generously sponsored by Athena SWAN! Taking place during reading week, this was the perfect opportunity to open our group and start building our community.",
-      photos: [
-        { id: 1, src: zoo1 },
-        { id: 2, src: zoo2 },
-        { id: 3, src: zoo3 },
-        { id: 4, src: zoo4 },
-        { id: 5, src: zoo5, alt: "Group photo with a giraffe" },
-        { id: 6, src: zoo6 }
       ]
     },
     {
@@ -86,6 +72,20 @@ const Gallery = () => {
         { id: 20, src: hthon14 },
         { id: 21, src: hthon15 },
         { id: 23, src: hthon16, alt: "Diageo speakers" }
+      ]
+    },
+    {
+      id: 1,
+      title: "Edinburgh Zoo",
+      date: "October 2024",
+      description: "Our first ever event - a fantastic day out at Edinburgh Zoo, generously sponsored by Athena SWAN! Taking place during reading week, this was the perfect opportunity to open our group and start building our community.",
+      photos: [
+        { id: 1, src: zoo1 },
+        { id: 2, src: zoo2 },
+        { id: 3, src: zoo3 },
+        { id: 4, src: zoo4 },
+        { id: 5, src: zoo5, alt: "Group photo with a giraffe" },
+        { id: 6, src: zoo6 }
       ]
     }
   ];
