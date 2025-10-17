@@ -54,7 +54,7 @@ const Gallery = () => {
       id: 2,
       title: "24HR Hackathon",
       date: "February 2025",
-      description: "Work in Teams of 5 to collaborate, code, and innovate! This event features inspiring talks on career journeys, networking opportunities with industry professionals, and the chance to win prizes.",
+      description: "Work in Teams of 5 to collaborate, code, and innovate! This event features inspiring talks on career journeys, networking opportunities with industry professionals, and the chance to win prizes. Sponsored by Diageo.",
       photos: [
         { id: 7, src: hthon1 },
         { id: 8, src: hthon2 },
